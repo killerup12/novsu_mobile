@@ -1,0 +1,91 @@
+import 'package:html/parser.dart' as parser;
+import 'package:html/dom.dart' as dom;
+
+import 'package:novsu_mobile/domain/models/lesson_item.dart';
+import 'package:novsu_mobile/domain/models/study_day.dart';
+import 'package:novsu_mobile/features/utils/html_converter.dart';
+
+class HtmlConverterImpl implements HtmlConverter {
+
+  @override
+  String extractTimetableLink(String html) {
+    final pars = parser.parse(html)
+        .getElementsByTagName('html iframe')[0]
+        .attributes['src'];
+
+    return pars ?? ''; //TODO add an exception
+  }
+
+  @override
+  List<StudyDay> convertHtmlTimetable(String html) {
+    final pars = parser.parse(html);
+
+    final aboutStudentsGroup = pars.getElementsByTagName('html h3');
+    final List<dom.Element> domTiming = pars.getElementsByTagName('tr')
+      ..removeRange(0, 3);
+
+    String studentsGroup = formatter(aboutStudentsGroup.first.nodes[0].toString());
+    String timingFor = formatter(aboutStudentsGroup.last.nodes[0].toString());
+
+    List<StudyDay> week = [];
+
+    List<Lesson> lessons = [];
+
+    late String dayOfTheWeek;
+
+    for (dom.Node node in domTiming) {
+
+      if (node.attributes['style'] == 'border-bottom: 1px solid #404040') {//Here we get day of the week
+        if ((lessons.isNotEmpty)) {
+          final localList = [...lessons];
+          week.add(StudyDay(
+              dayOfTheWeek: dayOfTheWeek,
+              lessons: localList
+          ));
+          lessons.clear();
+        }
+        dayOfTheWeek = formatter(node.nodes[1].nodes[0].toString());
+      } else {
+        List<String> time = [];
+        for (var element in node.nodes[1].nodes) {
+          if ((element is dom.Text) & (formatter(element.toString()).isNotEmpty)) {
+            time.add(formatter(element.toString()));
+          }
+        }
+
+        final separate = node.nodes[5].nodes[0].toString().split('\t\t\t\t\t\t\t\t');
+        final String name = formatter(separate[1]);
+
+        final String lessonType = formatter(separate[0]);
+
+        final String teacher = formatter(node.nodes[5].nodes[3].nodes[0].toString());
+
+        final String room = formatter(node.nodes[5].nodes[5].nodes[0].toString());
+
+        lessons.add(Lesson(
+            time: time,
+            name: name,
+            teacher: teacher,
+            room: room,
+            lessonType: lessonType
+        ));
+      }
+    }
+
+    final localList = [...lessons];
+    week.add(StudyDay(
+        dayOfTheWeek: dayOfTheWeek,
+        lessons: localList
+    ));
+
+    return week;
+  }
+
+  String formatter(String string) {
+    return string
+        .replaceAll('\n', ' ')
+        .replaceAll('\t', ' ')
+        .replaceAll('\"', ' ')
+        .trim();
+  }
+}
