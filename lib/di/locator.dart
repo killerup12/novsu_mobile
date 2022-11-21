@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart' hide Router;
 import 'package:get_it/get_it.dart';
 import 'package:novsu_mobile/data/api/novsu_api.dart';
 import 'package:novsu_mobile/data/api/novsu_client.dart';
-import 'package:novsu_mobile/features/utils/html_converter.dart';
-import 'package:novsu_mobile/features/utils/html_converter_impl.dart';
+import 'package:novsu_mobile/data/data_management/html_converter.dart';
+import 'package:novsu_mobile/data/data_management/html_converter_impl.dart';
 
 import '../features/navigation/navigation_manager.dart';
 import '../features/navigation/navigation_manager_impl.dart';

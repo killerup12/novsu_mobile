@@ -79,11 +79,6 @@ class NovsuClient implements NovsuApi {
     }
   }
 
-  Map<String, String> _getHeaders(String token) {
-    Map<String, String> headers = {}..addAll(requestHeaders);
-    return headers;
-  }
-
   dynamic _returnResponse(Response  response) {
     switch (response.statusCode) {
       case HttpStatus.ok:

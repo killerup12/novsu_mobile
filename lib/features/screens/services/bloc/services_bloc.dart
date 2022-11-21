@@ -9,6 +9,6 @@ class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   ServicesBloc({
     required this.novsuApi
   }) : super(InitServicesState()) {
-    on<Login>((event, emit) => novsuApi.getTimetable());
+    on<Login>((event, emit) async => await novsuApi.getTimetable());
   }
 }
