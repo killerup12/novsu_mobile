@@ -1,8 +1,9 @@
-import '../../domain/models/response_fields/responses_fields.dart';
-import '../../domain/models/study_day.dart';
+import 'package:novsu_mobile/domain/models/timeable_item.dart';
+
+import 'package:novsu_mobile/domain/models/response_fields/responses_fields.dart';
 
 abstract class NovsuApi {
   Future<User> login();
 
-  Future<List<StudyDay>> getTimetable();
+  Future<Timetable> getTimetable();
 }

@@ -3,7 +3,8 @@ import 'package:html/dom.dart' as dom;
 
 import 'package:novsu_mobile/domain/models/lesson_item.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
-import 'package:novsu_mobile/features/utils/html_converter.dart';
+import 'package:novsu_mobile/data/data_management/html_converter.dart';
+import 'package:novsu_mobile/domain/models/timeable_item.dart';
 
 class HtmlConverterImpl implements HtmlConverter {
 
@@ -17,7 +18,7 @@ class HtmlConverterImpl implements HtmlConverter {
   }
 
   @override
-  List<StudyDay> convertHtmlTimetable(String html) {
+  Timetable convertHtmlTimetable(String html) {
     final pars = parser.parse(html);
 
     final aboutStudentsGroup = pars.getElementsByTagName('html h3');
@@ -25,9 +26,9 @@ class HtmlConverterImpl implements HtmlConverter {
       ..removeRange(0, 3);
 
     String studentsGroup = formatter(aboutStudentsGroup.first.nodes[0].toString());
-    String timingFor = formatter(aboutStudentsGroup.last.nodes[0].toString());
+    String relevancePeriod = formatter(aboutStudentsGroup.last.nodes[0].toString());
 
-    List<StudyDay> week = [];
+    List<StudyDay> studyDays = [];
 
     List<Lesson> lessons = [];
 
@@ -78,7 +79,11 @@ class HtmlConverterImpl implements HtmlConverter {
         lessons: localList
     ));
 
-    return week;
+    return Timetable(
+        forGroup: studentsGroup,
+        relevancePeriod: relevancePeriod,
+        studyDays: studyDays
+    );
   }
 
   String formatter(String string) {

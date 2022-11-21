@@ -5,7 +5,8 @@ import 'package:novsu_mobile/data/api/novsu_api.dart';
 import 'package:novsu_mobile/data/api/private_consts.dart';
 import 'package:novsu_mobile/domain/models/response_fields/user.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
-import 'package:novsu_mobile/features/utils/html_converter.dart';
+import 'package:novsu_mobile/data/data_management/html_converter.dart';
+import 'package:novsu_mobile/domain/models/timeable_item.dart';
 
 import '../../domain/exceptions/exceptions.dart';
 
@@ -52,7 +53,7 @@ class NovsuClient implements NovsuApi {
   }
 
   @override
-  Future<List<StudyDay>> getTimetable() async {
+  Future<Timetable> getTimetable() async {
     try {
       final theUrl = htmlConverter.extractTimetableLink((await dio.get(
           'http://people.novsu.ru/NovSUScheduleService/ScheduleProxy?',
