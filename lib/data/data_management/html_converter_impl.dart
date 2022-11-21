@@ -39,8 +39,8 @@ class HtmlConverterImpl implements HtmlConverter {
       if (node.attributes['style'] == 'border-bottom: 1px solid #404040') {//Here we get day of the week
         if ((lessons.isNotEmpty)) {
           final localList = [...lessons];
-          week.add(StudyDay(
-              dayOfTheWeek: dayOfTheWeek,
+          studyDays.add(StudyDay(
+              shortWeekDay: dayOfTheWeek,
               lessons: localList
           ));
           lessons.clear();
@@ -74,8 +74,8 @@ class HtmlConverterImpl implements HtmlConverter {
     }
 
     final localList = [...lessons];
-    week.add(StudyDay(
-        dayOfTheWeek: dayOfTheWeek,
+    studyDays.add(StudyDay(
+        shortWeekDay: dayOfTheWeek,
         lessons: localList
     ));
 
