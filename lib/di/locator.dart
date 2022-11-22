@@ -32,8 +32,6 @@ void _initNavigation() {
           () => NavigationManagerImpl(navigatorKey: locator()));
 
   locator.registerLazySingleton<Router>(() => Router());
-
-  locator.registerLazySingleton<HtmlConverter>(() => HtmlConverterImpl());
 }
 
 void _initBlocs() {
@@ -56,6 +54,7 @@ void _initBlocs() {
 }
 
 void _initUtils() {
+  locator.registerLazySingleton<HtmlConverter>(() => HtmlConverterImpl());
 }
 
 void _initNetwork() {
