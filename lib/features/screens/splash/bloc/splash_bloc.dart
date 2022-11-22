@@ -19,7 +19,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   _goToTheNextScreen() {
     Future.delayed(const Duration(seconds: 2), () {
-      navigationManager.pushRouteWithReplacement(Routes.home);
+      //TODO add check for cookie validity
+      navigationManager.pushRouteWithReplacement(Routes.login);
     });
   }
 }

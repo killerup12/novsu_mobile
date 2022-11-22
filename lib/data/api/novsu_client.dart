@@ -30,7 +30,7 @@ class NovsuClient implements NovsuApi {
   });
 
   @override
-  Future<SignedIn> login() async {
+  Future<SignedIn> login(Login login) async {
     try {
       Response response;
 
@@ -40,8 +40,8 @@ class NovsuClient implements NovsuApi {
         ),
         data: {
           'json': '1',
-          'uid': PrivateConsts.uid,
-          'password': PrivateConsts.password,
+          'uid': login.uid,
+          'password': login.password,
           'remember': 'on'
         },
       );

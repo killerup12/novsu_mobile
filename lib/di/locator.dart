@@ -8,6 +8,7 @@ import 'package:novsu_mobile/data/api/novsu_api.dart';
 import 'package:novsu_mobile/data/api/novsu_client.dart';
 import 'package:novsu_mobile/data/data_management/html_converter.dart';
 import 'package:novsu_mobile/data/data_management/html_converter_impl.dart';
+import 'package:novsu_mobile/features/screens/login/bloc/login_bloc.dart';
 
 import '../features/navigation/navigation_manager.dart';
 import '../features/navigation/navigation_manager_impl.dart';
@@ -38,6 +39,11 @@ void _initBlocs() {
   locator.registerFactory<SplashBloc>(() => SplashBloc(
     navigationManager: locator(),
     novsuApi: locator()
+  ));
+
+  locator.registerFactory<LoginBloc>(() => LoginBloc(
+      novsuApi: locator(),
+      navigationManager: locator()
   ));
 
   locator.registerFactory<HomeBloc>(() => HomeBloc());
