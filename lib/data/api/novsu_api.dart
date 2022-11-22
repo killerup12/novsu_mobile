@@ -1,9 +1,8 @@
+import 'package:novsu_mobile/data/server_interaction/server_interaction.dart';
 import 'package:novsu_mobile/domain/models/timeable_item.dart';
 
-import 'package:novsu_mobile/domain/models/response_fields/responses_fields.dart';
-
 abstract class NovsuApi {
-  Future<User> login();
+  Future<SignedIn> login();
 
   Future<Timetable> getTimetable();
 }
