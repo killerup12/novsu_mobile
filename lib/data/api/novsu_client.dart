@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:novsu_mobile/data/api/novsu_api.dart';
 import 'package:novsu_mobile/data/api/private_consts.dart';
-import 'package:novsu_mobile/domain/models/response_fields/user.dart';
-import 'package:novsu_mobile/domain/models/study_day.dart';
+import 'package:novsu_mobile/data/server_interaction/responses/signed_in.dart';
+import 'package:novsu_mobile/data/server_interaction/server_interaction.dart';
 import 'package:novsu_mobile/data/data_management/html_converter.dart';
 import 'package:novsu_mobile/domain/models/timeable_item.dart';
 
@@ -30,7 +30,7 @@ class NovsuClient implements NovsuApi {
   });
 
   @override
-  Future<User> login() async {
+  Future<SignedIn> login() async {
     try {
       Response response;
 
@@ -39,14 +39,15 @@ class NovsuClient implements NovsuApi {
           headers: requestHeaders
         ),
         data: {
-          'redirect': 'https://portal.novsu.ru/',
           'json': '1',
           'uid': PrivateConsts.uid,
           'password': PrivateConsts.password,
           'remember': 'on'
         },
       );
-      return _returnResponse(response);
+      final json =  _returnResponse(response);
+
+      return SignedIn.fromJSON(json);
     } on DioError catch (e) {
       return _handleDioError(e);
     }
@@ -55,15 +56,16 @@ class NovsuClient implements NovsuApi {
   @override
   Future<Timetable> getTimetable() async {
     try {
-      final theUrl = htmlConverter.extractTimetableLink((await dio.get(
-          'http://people.novsu.ru/NovSUScheduleService/ScheduleProxy?',
-          queryParameters: {
-            'uid': PrivateConsts.uid //TODO get login from profile
+      final theUrl = htmlConverter.extractTimetableLink(
+          _returnResponse(await dio.get(
+              'http://people.novsu.ru/NovSUScheduleService/ScheduleProxy?',
+              queryParameters: {
+                  'uid': PrivateConsts.uid //TODO get login from profile
           }
-      )).data);
+      )));
 
       final response = htmlConverter.convertHtmlTimetable(
-          (await dio.get(theUrl)).data);
+          _returnResponse(await dio.get(theUrl)));
 
       return response;
     } on DioError catch (e) {
