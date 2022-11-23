@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:novsu_mobile/domain/models/response_fields/user.dart';
+import 'package:novsu_mobile/domain/models/user.dart';
 
 class SignedIn extends Equatable {
   final User user;
