@@ -1,4 +1,4 @@
-import 'package:novsu_mobile/domain/models/journal_item.dart';
+import 'package:novsu_mobile/domain/models/journal.dart';
 import 'package:novsu_mobile/features/decorations/subject_widget.dart';
 import 'package:novsu_mobile/features/screens/journal/bloc/journal_bloc.dart';
 import 'package:novsu_mobile/features/screens/journal/bloc/journal_states.dart';
@@ -41,10 +41,10 @@ class _JournalScreenState extends State<JournalScreen> {
     );
   }
 
-  List<Widget> convertSubjectsToWidgets(List<JournalItem> subjects) {
+  List<Widget> convertSubjectsToWidgets(List<Journal> subjects) {
     List<Widget> subjectWidgets = [];
 
-    for (JournalItem element in subjects) {
+    for (Journal element in subjects) {
       subjectWidgets.add(SubjectWidget(
         journalItem: element,
         onTap: () {

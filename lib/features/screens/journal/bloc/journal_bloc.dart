@@ -9,6 +9,6 @@ class JournalBloc extends Bloc<JournalEvent, JournalState> {
   }
 
   LoadedSubjectsState _loadJournal() {
-    return LoadedSubjectsState(journalItems: Journal.journalItems);
+    return LoadedSubjectsState(journalItems: JournalHerdCode.journalItems);
   }
 }

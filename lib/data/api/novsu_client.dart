@@ -5,8 +5,8 @@ import 'package:novsu_mobile/data/api/novsu_api.dart';
 import 'package:novsu_mobile/data/api/private_consts.dart';
 import 'package:novsu_mobile/data/server_interaction/responses/signed_in.dart';
 import 'package:novsu_mobile/data/server_interaction/server_interaction.dart';
-import 'package:novsu_mobile/data/data_management/html_converter.dart';
-import 'package:novsu_mobile/domain/models/timeable_item.dart';
+import 'package:novsu_mobile/domain/utils/html_converter.dart';
+import 'package:novsu_mobile/domain/models/timetable.dart';
 
 import '../../domain/exceptions/exceptions.dart';
 

@@ -1,4 +1,4 @@
-import 'package:novsu_mobile/domain/models/lesson_item.dart';
+import 'package:novsu_mobile/domain/models/lesson.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
 import 'package:flutter/widgets.dart';

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:novsu_mobile/domain/models/journal_item.dart';
+import 'package:novsu_mobile/domain/models/journal.dart';
 
 abstract class JournalState extends Equatable {
   @override
@@ -12,7 +12,7 @@ class InitJournalState extends JournalState {
 }
 
 class LoadedSubjectsState extends JournalState {
-  final List<JournalItem> journalItems;
+  final List<Journal> journalItems;
 
   LoadedSubjectsState({
     required this.journalItems

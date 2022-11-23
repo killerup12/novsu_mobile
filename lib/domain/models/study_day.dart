@@ -1,8 +1,14 @@
 import 'package:equatable/equatable.dart';
-import 'package:novsu_mobile/domain/models/lesson_item.dart';
+import 'package:hive/hive.dart';
+import 'package:novsu_mobile/domain/models/lesson.dart';
 
+part '../hive_adapters/study_day.g.dart';
+
+@HiveType(typeId: 2)
 class StudyDay extends Equatable {
+  @HiveField(0)
   final String dayOfTheWeek;
+  @HiveField(1)
   final List<Lesson>? lessons;
 
   const StudyDay._local({

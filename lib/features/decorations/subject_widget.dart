@@ -1,9 +1,9 @@
-import 'package:novsu_mobile/domain/models/journal_item.dart';
+import 'package:novsu_mobile/domain/models/journal.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
 import 'package:flutter/material.dart';
 
 class SubjectWidget extends StatelessWidget {
-  final JournalItem journalItem;
+  final Journal journalItem;
   final Function onTap;
 
   const SubjectWidget({

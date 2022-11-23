@@ -18,12 +18,10 @@ void main() async {
 
   Bloc.observer = SimpleBlocDelegate();
 
-  runApp(const FivePlus());
+  runApp(FivePlus());
 }
 
 class FivePlus extends StatelessWidget {
-  const FivePlus({super.key});
-
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(

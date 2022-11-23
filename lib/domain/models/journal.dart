@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-class JournalItem extends Equatable {
+class Journal extends Equatable {
   final String subject;
   final double grade;
 
 
-  const JournalItem({
+  const Journal({
     required this.subject,
     required this.grade
   });

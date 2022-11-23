@@ -1,10 +1,10 @@
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
 
-import 'package:novsu_mobile/domain/models/lesson_item.dart';
+import 'package:novsu_mobile/domain/models/lesson.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
-import 'package:novsu_mobile/data/data_management/html_converter.dart';
-import 'package:novsu_mobile/domain/models/timeable_item.dart';
+import 'package:novsu_mobile/domain/utils/html_converter.dart';
+import 'package:novsu_mobile/domain/models/timetable.dart';
 
 class HtmlConverterImpl implements HtmlConverter {
 
