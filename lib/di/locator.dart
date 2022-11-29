@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/widgets.dart' hide Router;
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -25,10 +27,10 @@ final locator = GetIt.instance;
 
 Future<void> initLocator() async {
   _initNavigation();
-  _initBlocs();
   _initUtils();
-  _initNetwork();
+  await _initNetwork();
   _initHive();
+  _initBlocs();
 }
 
 _initNavigation() {
@@ -72,7 +74,10 @@ _initUtils() {
   locator.registerLazySingleton<MemoryAccessProvider>(() => MemoryAccessProviderImpl());
 }
 
-_initNetwork() {
+_initNetwork() async {
+  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  final PersistCookieJar cookieJar = PersistCookieJar(storage: FileStorage('${appDocumentDir.path}/.cookies/'));
+
   Dio dio = Dio(BaseOptions(validateStatus: (status) => true));
   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
       (HttpClient client) {
@@ -80,6 +85,8 @@ _initNetwork() {
         (X509Certificate cert, String host, int port) => true;
     return client;
   };
+
+  dio.interceptors.add(CookieManager(cookieJar));
 
   locator.registerLazySingleton<Dio>(() => dio);
 
