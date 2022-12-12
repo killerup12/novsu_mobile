@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:novsu_mobile/domain/models/study_day.dart';
+import 'package:novsu_mobile/domain/models/models.dart';
 
 abstract class TimingState extends Equatable {
   @override
@@ -12,10 +12,10 @@ class InitTimingState extends TimingState {
 }
 
 class LoadedSchoolDaysState extends TimingState {
-  final List<StudyDay> schoolDays;
+  final Timetable timetable;
 
-  LoadedSchoolDaysState({required this.schoolDays});
+  LoadedSchoolDaysState({required this.timetable});
 
   @override
-  List<Object?> get props => [schoolDays];
+  List<Object?> get props => [timetable];
 }

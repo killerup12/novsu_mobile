@@ -1,4 +1,4 @@
-import 'package:novsu_mobile/domain/models/study_day.dart';
+import 'package:novsu_mobile/domain/models/models.dart';
 import 'package:novsu_mobile/features/screens/blocs.dart';
 import 'package:novsu_mobile/features/screens/timing/bloc/timing_events.dart';
 import 'package:novsu_mobile/features/screens/timing/bloc/timing_states.dart';
@@ -40,19 +40,19 @@ class _TimingScreenState extends State<TimingScreen> {
 
   Widget showTimingInformation(TimingState state) {
     if (state is LoadedSchoolDaysState) {
-      return convertLessonsToWidgets(state.schoolDays);
+      return convertTimetableToWidget(state.timetable);
     } else {
       return const Center(child: CircularProgressIndicator());
     }
   }
 
-  Widget convertLessonsToWidgets(List<StudyDay> schoolDays) {
+  Widget convertTimetableToWidget(Timetable timetable) {
     List<Widget> lessonsWidget = [];
 
-    for (StudyDay element in schoolDays) {
+    for (StudyDay element in timetable.studyDays) {
       lessonsWidget.add(SchoolDayWidget(schoolDay: element));
 
-      if (element != schoolDays.last) {
+      if (element != timetable.studyDays.last) {
         lessonsWidget.add(const SizedBox(height: 20));
       }
     }
