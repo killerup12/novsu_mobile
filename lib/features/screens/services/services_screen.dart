@@ -17,11 +17,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<ServicesBloc, ServicesState>(
       builder: (context, state) => Scaffold(
-        floatingActionButton: FloatingActionButton(
-            onPressed: () => setState(() {
-              BlocProvider.of<ServicesBloc>(context).add(Login());
-            })
-          ),
         appBar: AppBar(
           title: const Text('Services'), //TODO i18n
         ),
