@@ -10,6 +10,18 @@ class MemoryAccessProviderImpl extends MemoryAccessProvider {
   static const String _user = 'user';
   static const String _timetable = 'timetable';
 
+  final CookieJar cookieJar;
+
+  MemoryAccessProviderImpl({
+    required this.cookieJar
+  });
+
+  @override
+  Future removeAccountData() async {
+    await Hive.box(boxName).clear();
+    await cookieJar.deleteAll();
+  }
+
   @override
   User getUser() {
     return _returnData(Hive.box('studentData').get(_user));
