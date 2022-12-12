@@ -12,8 +12,10 @@ import '../../domain/exceptions/exceptions.dart';
 
 class NovsuClient implements NovsuApi {
   static const postLoginUrl = 'https://portal.novsu.ru/s.login/';
+
   static const getMailsInfoUrl = 'https://portal.novsu.ru/npe/design/themes/novsu2013/checkMail.php?callback=zimba_jsonp_callback';
   static const getZachetkaUrl = 'https://portal.novsu.ru/studentprogress/i.1292972.0.0/';
+  static const getProfilePage = 'https://people.novsu.ru/profiles/html/myProfileView.do?lang=ru_ru';
 
   static const Map<String, String> requestHeaders= {
     HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
@@ -26,7 +28,7 @@ class NovsuClient implements NovsuApi {
 
   NovsuClient({
     required this.dio,
-    required this.htmlConverter
+    required this.htmlConverter,
   });
 
   @override
@@ -54,7 +56,25 @@ class NovsuClient implements NovsuApi {
   }
 
   @override
-  Future<Timetable> getTimetable() async {
+  Future getMainProfilePage() async {
+    try {
+      final Response response = await dio.get(
+          'https://people.novsu.ru/profiles/html/myProfileView.do?lang=ru_ru');
+
+      if (response.redirects.isEmpty) {
+        return _returnResponse(response);
+      } else {
+        throw FetchDataException(
+            'You have been redirected to another request!'
+        );
+      }
+    } on DioError catch (e) {
+      return _handleDioError(e);
+    }
+  }
+
+  @override
+  Future<Timetable> getTimetable(String studentId) async {
     try {
       final theUrl = htmlConverter.extractTimetableLink(
           _returnResponse(await dio.get(
