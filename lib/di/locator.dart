@@ -57,7 +57,9 @@ _initBlocs() {
 
   locator.registerFactory<HomeBloc>(() => HomeBloc());
 
-  locator.registerFactory<TimingBloc>(() => TimingBloc());
+  locator.registerFactory<TimingBloc>(() => TimingBloc(
+    memoryAccessProvider: locator()
+  ));
 
   locator.registerFactory<JournalBloc>(() => JournalBloc());
 

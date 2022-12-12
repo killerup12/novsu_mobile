@@ -1,14 +1,22 @@
+import 'package:novsu_mobile/domain/utils/memory_access_provider.dart';
 import 'package:novsu_mobile/features/screens/timing/bloc/timing_events.dart';
 import 'package:novsu_mobile/features/screens/timing/bloc/timing_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TimingBloc extends Bloc<TimingEvent, TimingState> {
+  final MemoryAccessProvider memoryAccessProvider;
 
-  TimingBloc() : super(InitTimingState()) {
-    on<GetSchoolDaysEvent>((event, emit) => emit(_mapGetLessonsEvent()));
+  TimingBloc({
+    required this.memoryAccessProvider
+  }) : super(InitTimingState()) {
+    on<GetSchoolDaysEvent>((event, emit) => emit(_mapGetLessonsEvent(event, emit)));
   }
 
-  TimingState _mapGetLessonsEvent() {
-    return InitTimingState(); //TODO rework
+  _mapGetLessonsEvent(TimingEvent event, Emitter emit) {
+    final timetable = memoryAccessProvider.getTimetable();
+
+    emit(LoadedSchoolDaysState(
+        timetable: timetable
+    ));
   }
 }
