@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:novsu_mobile/data/api/novsu_api.dart';
-import 'package:novsu_mobile/data/api/private_consts.dart';
-import 'package:novsu_mobile/data/server_interaction/responses/signed_in.dart';
 import 'package:novsu_mobile/data/server_interaction/server_interaction.dart';
 import 'package:novsu_mobile/domain/utils/html_converter.dart';
 import 'package:novsu_mobile/domain/models/timetable.dart';
@@ -24,7 +22,6 @@ class NovsuClient implements NovsuApi {
 
   final Dio dio;
   final HtmlConverter htmlConverter;
-
 
   NovsuClient({
     required this.dio,
@@ -80,7 +77,7 @@ class NovsuClient implements NovsuApi {
           _returnResponse(await dio.get(
               'http://people.novsu.ru/NovSUScheduleService/ScheduleProxy?',
               queryParameters: {
-                  'uid': PrivateConsts.uid //TODO get login from profile
+                  'uid': studentId
           }
       )));
 
