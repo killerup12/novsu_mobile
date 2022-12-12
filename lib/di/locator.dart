@@ -26,11 +26,35 @@ import '../features/screens/blocs.dart';
 final locator = GetIt.instance;
 
 Future<void> initLocator() async {
+  await _initNetwork();
   _initNavigation();
   _initUtils();
-  await _initNetwork();
   _initHive();
   _initBlocs();
+}
+
+_initNetwork() async {
+  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
+  final PersistCookieJar cookieJar = PersistCookieJar(storage: FileStorage('${appDocumentDir.path}/.cookies/'));
+
+  Dio dio = Dio(BaseOptions(validateStatus: (status) => true));
+  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      (HttpClient client) {
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    return client;
+  };
+
+  dio.interceptors.add(CookieManager(cookieJar));
+
+  locator.registerLazySingleton<Dio>(() => dio);
+
+  locator.registerLazySingleton<CookieJar>(() => cookieJar);
+
+  locator.registerLazySingleton<NovsuApi>(() => NovsuClient(
+      dio: locator(),
+      htmlConverter: locator(),
+  ));
 }
 
 _initNavigation() {
@@ -46,7 +70,8 @@ _initNavigation() {
 _initBlocs() {
   locator.registerFactory<SplashBloc>(() => SplashBloc(
       navigationManager: locator(),
-      novsuApi: locator()
+      novsuApi: locator(),
+      memoryAccessProviderl: locator()
   ));
 
   locator.registerFactory<LoginBloc>(() => LoginBloc(
@@ -66,35 +91,16 @@ _initBlocs() {
   locator.registerFactory<TopicalBloc>(() => TopicalBloc());
 
   locator.registerFactory<ServicesBloc>(() => ServicesBloc(
-    novsuApi: locator()
+    novsuApi: locator(),
+    memoryAccessProvider: locator()
   ));
 }
 
 _initUtils() {
   locator.registerLazySingleton<HtmlConverter>(() => HtmlConverterImpl());
 
-  locator.registerLazySingleton<MemoryAccessProvider>(() => MemoryAccessProviderImpl());
-}
-
-_initNetwork() async {
-  final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
-  final PersistCookieJar cookieJar = PersistCookieJar(storage: FileStorage('${appDocumentDir.path}/.cookies/'));
-
-  Dio dio = Dio(BaseOptions(validateStatus: (status) => true));
-  (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-      (HttpClient client) {
-    client.badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
-    return client;
-  };
-
-  dio.interceptors.add(CookieManager(cookieJar));
-
-  locator.registerLazySingleton<Dio>(() => dio);
-
-  locator.registerLazySingleton<NovsuApi>(() => NovsuClient(
-      dio: locator(),
-      htmlConverter: locator()
+  locator.registerLazySingleton<MemoryAccessProvider>(() => MemoryAccessProviderImpl(
+    cookieJar: locator()
   ));
 }
 
