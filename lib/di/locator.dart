@@ -88,7 +88,10 @@ _initBlocs() {
 
   locator.registerFactory<JournalBloc>(() => JournalBloc());
 
-  locator.registerFactory<TopicalBloc>(() => TopicalBloc());
+  locator.registerFactory<TopicalBloc>(() => TopicalBloc(
+    memoryAccessProvider: locator(),
+    navigationManager: locator()
+  ));
 
   locator.registerFactory<ServicesBloc>(() => ServicesBloc(
     novsuApi: locator(),
