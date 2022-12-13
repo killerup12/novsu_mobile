@@ -71,7 +71,7 @@ _initBlocs() {
   locator.registerFactory<SplashBloc>(() => SplashBloc(
       navigationManager: locator(),
       novsuApi: locator(),
-      memoryAccessProviderl: locator()
+      memoryAccessProvider: locator()
   ));
 
   locator.registerFactory<LoginBloc>(() => LoginBloc(

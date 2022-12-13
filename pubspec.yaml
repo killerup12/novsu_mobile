@@ -42,8 +42,6 @@ dependencies:
 
   path_provider:
 
-  device_info_plus:
-
   pretty_dio_logger:
 
   flutter_lints: ^2.0.1
