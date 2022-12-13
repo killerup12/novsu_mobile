@@ -1,6 +1,6 @@
 import 'package:novsu_mobile/domain/utils/memory_access_provider.dart';
-import 'package:novsu_mobile/features/screens/timing/bloc/timing_events.dart';
-import 'package:novsu_mobile/features/screens/timing/bloc/timing_states.dart';
+import 'package:novsu_mobile/features/screens/timetable/bloc/timetable_events.dart';
+import 'package:novsu_mobile/features/screens/timetable/bloc/timetable_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TimingBloc extends Bloc<TimingEvent, TimingState> {

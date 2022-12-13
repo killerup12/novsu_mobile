@@ -2,7 +2,7 @@ import 'package:novsu_mobile/di/locator.dart';
 import 'package:novsu_mobile/features/screens/home/bloc/home_events.dart';
 import 'package:novsu_mobile/features/screens/journal/journal_screen.dart';
 import 'package:novsu_mobile/features/screens/services/services_screen.dart';
-import 'package:novsu_mobile/features/screens/timing/timing_screen.dart';
+import 'package:novsu_mobile/features/screens/timetable/timing_screen.dart';
 import 'package:novsu_mobile/features/screens/topical/topical_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

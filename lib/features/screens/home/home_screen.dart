@@ -7,7 +7,7 @@ import 'package:novsu_mobile/di/locator.dart';
 import '../blocs.dart';
 import '../journal/journal_screen.dart';
 import '../services/services_screen.dart';
-import '../timing/timing_screen.dart';
+import '../timetable/timing_screen.dart';
 import '../topical/topical_screen.dart';
 
 class HomeScreen extends StatefulWidget {

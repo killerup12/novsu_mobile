@@ -50,7 +50,7 @@ class _TopicalScreenState extends State<TopicalScreen> {
         ...buildNews(state)
       ];
     } else {
-      return const [CircularProgressIndicator()];
+      return const [SizedBox()];
     }
   }
 
