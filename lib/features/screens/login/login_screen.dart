@@ -53,19 +53,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 state is WaitingResponseLoginState
                 ? const CircularProgressIndicator()
-                : Container(
-                  height: 70,
-                  width: 300,
-                  decoration: const BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  child: GestureDetector(
-                    child: const Center(child: Text('Login')),
-                    onTap: () => BlocProvider.of<LoginBloc>(context).add(LoginToTheAccount(
-                        userName: loginTextController.text,
-                        password: passwordTextController.text
-                    )),
+                : GestureDetector(
+                  onTap: () => BlocProvider.of<LoginBloc>(context).add(LoginToTheAccount(
+                      userName: loginTextController.text,
+                      password: passwordTextController.text
+                  )),
+                  child: Container(
+                    height: 70,
+                    width: 300,
+                    decoration: const BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    child: const Text('Log in',
+                      style: TextStyle(fontSize: 15),), //TODO add to theme
                   ),
                 )
               ],
