@@ -32,6 +32,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       memoryAccessProvider.setUser(userInfo);
 
+      memoryAccessProvider.setTimetable(await novsuApi.getTimetable(
+          memoryAccessProvider.getUser().uid)); //TODO rework this shit
+
       navigationManager.pushRouteWithReplacement(Routes.home);
     } catch (e) {
       //TODO show a message 'login or password is wrong'
