@@ -16,6 +16,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   late final AnimationController controller;
   late final Animation<double> sizeAnimation;
 
+  final List<String> steps = []; //TODO remove
+
   @override
   void initState() {
     super.initState();
@@ -23,7 +25,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       ..addListener(() => setState(() {}))
       ..forward();
     sizeAnimation = Tween<double>(begin: 1.0, end: 1.5).animate(CurvedAnimation(parent: controller, curve: Curves.easeOutQuad));
-    BlocProvider.of<SplashBloc>(context).add(GoToTheNextScreenEvent());
+    Future.delayed(const Duration(seconds: 2),() {
+      BlocProvider.of<SplashBloc>(context).add(GoToTheNextScreenEvent());
+    });
   }
 
   @override
@@ -36,21 +40,46 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Widget build(BuildContext  context) {
     return BlocBuilder<SplashBloc, SplashState>(
       builder: (context, state) {
-        return Scaffold(
-        body: Center(
-          child: Transform.scale(
-              scale: sizeAnimation.value,
-              child: const ColoredBox(
-                color: Colors.blue,
-                child: SizedBox.square(dimension: 50,), //TODO add normal image!!
-              )
-          )
-        ),
-      );}
+        return BlocListener<SplashBloc, SplashState>(
+          listener: (context, state) {
+            if (state is StepEvent) {
+              setState(() {
+                steps.add(state.step);
+              });
+            }
+          },
+          child: Scaffold(
+            body: Center(
+              child: Transform.scale(
+                  scale: sizeAnimation.value,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const ColoredBox(
+                        color: Colors.blue,
+                        child: SizedBox.square(dimension: 50,), //TODO add normal image!!
+                      ),
+                      getSteps() //TODO remove
+                    ],
+                  )
+              ))
+          ),
+        );
+      }
     );
   }
 
-  startTransitionAnimation() {
+  Text getSteps() { //TODO remove
+    String answer = '';
 
+    for (String element in steps) {
+      answer += element;
+      answer += '\n';
+    }
+
+    return Text(answer, style: TextStyle(
+      color: Colors.black,
+      fontSize: 10
+    ),);
   }
 }

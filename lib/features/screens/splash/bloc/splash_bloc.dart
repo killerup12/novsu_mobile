@@ -10,30 +10,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   final NovsuApi novsuApi;
   final NavigationManager navigationManager;
-  final MemoryAccessProvider memoryAccessProviderl;
+  final MemoryAccessProvider memoryAccessProvider;
 
   SplashBloc({
     required this.navigationManager,
     required this.novsuApi,
-    required this.memoryAccessProviderl
+    required this.memoryAccessProvider
   }) : super(InitSplashState()) {
-    on<GoToTheNextScreenEvent>((event, emit) => _goToTheNextScreen(emit));
-  }
-
-
-  _goToTheNextScreen(Emitter emit) {
-    Future.delayed(const Duration(seconds: 2), () async {
-      try {
-        await novsuApi.getMainProfilePage(); //TODO rework
-        memoryAccessProviderl.setTimetable(
-              await novsuApi.getTimetable(memoryAccessProviderl.getUser().uid
-            )); //TODO rework this shit
-        navigationManager.pushRouteWithReplacement(Routes.home);
-      } on NetworkException catch(e) {
-        navigationManager.pushRoute(Routes.login);
-      } on MemoryException catch(e) {
-        navigationManager.pushRoute(Routes.login);
-      }
+    on<GoToTheNextScreenEvent>((event, emit) async {
+      await _goToTheNextScreen(emit);
     });
   }
-}
+
+
+  _goToTheNextScreen(Emitter<SplashState> emit) async {
+        try {
+          emit(StepEvent(
+              step: 'await novsuApi.getMainProfilePage(); //TODO rework')); //TODO remove
+          await novsuApi.getMainProfilePage(); //TODO rework
+          emit(StepEvent(step: 'memoryAccessProviderl.setTimetable')); //TODO remove
+          memoryAccessProvider.setTimetable(await novsuApi.getTimetable(
+              memoryAccessProvider.getUser().uid)); //TODO rework this shit
+          navigationManager.pushRouteWithReplacement(Routes.home);
+        } on NetworkException catch (e) {
+          emit(StepEvent(
+              step: 'NetworkException')); //TODO remove
+          navigationManager.pushRoute(Routes.login);
+        } on MemoryException catch (e) {
+          emit(StepEvent(
+              step: 'MemoryException')); //TODO remove
+          navigationManager.pushRoute(Routes.login);
+        }
+      }
+  }
