@@ -44,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: const ServicesScreen()
       )
     ];
+
+    currentTabIndex = 1;
   }
 
   @override
@@ -58,22 +60,22 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: currentTabIndex,
             onTap: onTap,
             items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.wysiwyg),
-                label: 'Journal'
-              ),
+              // BottomNavigationBarItem(
+              //     icon: Icon(Icons.wysiwyg),
+              //   label: 'Journal'
+              // ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.access_time,),
                 label: 'Timing'
               ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.new_releases_outlined),
-                label: 'Topical'
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.widgets),
-                label: 'Services'
-              )
+              // BottomNavigationBarItem(
+              //     icon: Icon(Icons.new_releases_outlined),
+              //   label: 'Topical'
+              // ),
+              // BottomNavigationBarItem(
+              //     icon: Icon(Icons.widgets),
+              //   label: 'Services'
+              // )
             ],
           ),
         )
