@@ -55,9 +55,19 @@ class HtmlConverterImpl implements HtmlConverter {
         }
 
         final separate = node.nodes[5].nodes[0].toString().split('\t\t\t\t\t\t\t\t');
-        final String name = formatter(separate[1]);
 
-        final String lessonType = formatter(separate[0]);
+        late final String name;
+        late final String lessonType;
+
+        try {
+          name = formatter(separate[1]);
+
+          lessonType = formatter(separate[0]);
+        } catch (e) {
+          name = formatter(separate[0]);
+
+          lessonType = ''; //TODO Think about that
+        }
 
         final String teacher = formatter(node.nodes[5].nodes[3].nodes[0].toString());
 
