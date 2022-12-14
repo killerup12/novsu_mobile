@@ -9,7 +9,7 @@ class TimingBloc extends Bloc<TimingEvent, TimingState> {
   TimingBloc({
     required this.memoryAccessProvider
   }) : super(InitTimingState()) {
-    on<GetSchoolDaysEvent>((event, emit) => emit(_mapGetLessonsEvent(event, emit)));
+    on<GetSchoolDaysEvent>((event, emit) => _mapGetLessonsEvent(event, emit));
   }
 
   _mapGetLessonsEvent(TimingEvent event, Emitter emit) {

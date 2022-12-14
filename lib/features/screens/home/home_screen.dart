@@ -20,32 +20,32 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final List<Widget> _pages;
 
-  int currentTabIndex = 0;
+  late int currentTabIndex;
 
   @override
   void initState() {
     super.initState();
 
     _pages = [
-      BlocProvider(
-        create: (context) => locator<JournalBloc>(),
-        child: const JournalScreen(),
-      ),
+      // BlocProvider(
+      //   create: (context) => locator<JournalBloc>(),
+      //   child: const JournalScreen(),
+      // ),
       BlocProvider(
         create: (context) => locator<TimingBloc>(),
         child: const TimingScreen(),
       ),
-      BlocProvider(
-        create: (context) => locator<TopicalBloc>(),
-        child: const TopicalScreen(),
-      ),
+      // BlocProvider(
+      //   create: (context) => locator<TopicalBloc>(),
+      //   child: const TopicalScreen(),
+      // ),
       BlocProvider(
           create: (context) => locator<ServicesBloc>(),
           child: const ServicesScreen()
       )
     ];
 
-    currentTabIndex = 1;
+    currentTabIndex = 0;
   }
 
   @override
@@ -72,10 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
               //     icon: Icon(Icons.new_releases_outlined),
               //   label: 'Topical'
               // ),
-              // BottomNavigationBarItem(
-              //     icon: Icon(Icons.widgets),
-              //   label: 'Services'
-              // )
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.widgets),
+                label: 'Services'
+              )
             ],
           ),
         )
