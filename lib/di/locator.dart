@@ -95,7 +95,8 @@ _initBlocs() {
 
   locator.registerFactory<ServicesBloc>(() => ServicesBloc(
     novsuApi: locator(),
-    memoryAccessProvider: locator()
+    memoryAccessProvider: locator(),
+    navigationManager: locator()
   ));
 }
 

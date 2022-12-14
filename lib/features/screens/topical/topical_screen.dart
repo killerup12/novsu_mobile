@@ -28,13 +28,13 @@ class _TopicalScreenState extends State<TopicalScreen> {
       builder: (context, state) => Scaffold(
         appBar: AppBar(
           title: const Text('Topical'), //TODO i18n
-          leading: GestureDetector(
-            onTap: () => BlocProvider.of<TopicalBloc>(context).add(LogOutEvent()),
-            child: const Icon(
-              Icons.sensor_door_outlined,
-              color: Colors.red,
-            ),
-          )
+          // leading: GestureDetector(
+          //   onTap: () => BlocProvider.of<TopicalBloc>(context).add(LogOutEvent()),
+          //   child: const Icon(
+          //     Icons.sensor_door_outlined,
+          //     color: Colors.red,
+          //   ),
+          // )
         ),
         body: SingleChildScrollView(
           child: Padding(

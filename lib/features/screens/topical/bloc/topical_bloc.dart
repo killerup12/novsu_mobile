@@ -14,15 +14,15 @@ class TopicalBloc extends Bloc<TopicalEvent, TopicalState> {
     required this.navigationManager
   }) : super(InitTopicalState()){
     on<LoadDataEvent>((event, emit) => emit(_mapLoadDataEvent(event)));
-    on<LogOutEvent>((event, emit) => _mapLogOutEvent(event, emit));
+    // on<LogOutEvent>((event, emit) => _mapLogOutEvent(event, emit));
   }
 
   TopicalState _mapLoadDataEvent(TopicalEvent event) {
     return InitTopicalState(); //TODO rework
   }
 
-  _mapLogOutEvent(LogOutEvent event, Emitter emit) {
-    memoryAccessProvider.removeAccountData();
-    navigationManager.pushRouteWithReplacement(Routes.login);
-  }
+  // _mapLogOutEvent(LogOutEvent event, Emitter emit) {
+  //   memoryAccessProvider.removeAccountData();
+  //   navigationManager.pushRouteWithReplacement(Routes.login);
+  // }
 }

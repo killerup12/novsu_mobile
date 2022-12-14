@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:novsu_mobile/features/screens/blocs.dart';
+import 'package:novsu_mobile/features/screens/services/bloc/services_bloc.dart';
+
 
 
 class ServicesScreen extends StatefulWidget {
@@ -17,6 +18,15 @@ class _ServicesScreenState extends State<ServicesScreen> {
       builder: (context, state) => Scaffold(
         appBar: AppBar(
           title: const Text('Services'), //TODO i18n
+          actions: [
+            GestureDetector(
+              onTap: () => BlocProvider.of<ServicesBloc>(context).add(LogOutEvent()),
+              child: const Icon(
+                Icons.sensor_door_outlined,
+                color: Colors.red, //TODO add to theme
+              ),
+            )
+          ],
         ),
       ),
     );  }

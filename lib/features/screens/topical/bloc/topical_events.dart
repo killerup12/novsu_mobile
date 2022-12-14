@@ -10,7 +10,7 @@ class LoadDataEvent extends TopicalEvent {
   List<Object?> get props => [];
 }
 
-class LogOutEvent extends TopicalEvent {
-  @override
-  List<Object?> get props => [];
-}
+// class LogOutEvent extends TopicalEvent {
+//   @override
+//   List<Object?> get props => [];
+// }
