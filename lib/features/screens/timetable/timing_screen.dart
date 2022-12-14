@@ -1,7 +1,5 @@
 import 'package:novsu_mobile/domain/models/models.dart';
 import 'package:novsu_mobile/features/screens/blocs.dart';
-import 'package:novsu_mobile/features/screens/timetable/bloc/timetable_events.dart';
-import 'package:novsu_mobile/features/screens/timetable/bloc/timetable_states.dart';
 import 'package:novsu_mobile/features/screens/timetable/decorations/study_day_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

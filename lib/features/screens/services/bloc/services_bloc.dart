@@ -4,6 +4,9 @@ import 'package:novsu_mobile/features/screens/services/bloc/services_events.dart
 import 'package:novsu_mobile/features/screens/services/bloc/services_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+export 'services_events.dart';
+export 'services_states.dart';
+
 class ServicesBloc extends Bloc<ServicesEvent, ServicesState> {
   final NovsuApi novsuApi;
   final MemoryAccessProvider memoryAccessProvider;

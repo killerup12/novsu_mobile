@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:novsu_mobile/features/screens/blocs.dart';
-import 'package:novsu_mobile/features/screens/services/bloc/services_events.dart';
-import 'package:novsu_mobile/features/screens/services/bloc/services_states.dart';
 
 
 class ServicesScreen extends StatefulWidget {

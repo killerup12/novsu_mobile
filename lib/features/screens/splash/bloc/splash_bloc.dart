@@ -7,6 +7,9 @@ import 'package:novsu_mobile/features/screens/splash/bloc/splash_events.dart';
 import 'package:novsu_mobile/features/screens/splash/bloc/splash_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+export 'splash_events.dart';
+export 'splash_states.dart';
+
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   final NovsuApi novsuApi;
   final NavigationManager navigationManager;

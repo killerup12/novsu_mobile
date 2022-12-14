@@ -1,14 +1,6 @@
-import 'package:novsu_mobile/features/screens/home/bloc/home_bloc.dart';
-import 'package:novsu_mobile/features/screens/home/bloc/home_events.dart';
-import 'package:novsu_mobile/features/screens/home/bloc/home_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:novsu_mobile/di/locator.dart';
-import '../blocs.dart';
-import '../journal/journal_screen.dart';
-import '../services/services_screen.dart';
-import '../timetable/timing_screen.dart';
-import '../topical/topical_screen.dart';
+import 'package:novsu_mobile/features/screens/home/bloc/home_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,24 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    _pages = [
-      // BlocProvider(
-      //   create: (context) => locator<JournalBloc>(),
-      //   child: const JournalScreen(),
-      // ),
-      BlocProvider(
-        create: (context) => locator<TimingBloc>(),
-        child: const TimingScreen(),
-      ),
-      // BlocProvider(
-      //   create: (context) => locator<TopicalBloc>(),
-      //   child: const TopicalScreen(),
-      // ),
-      BlocProvider(
-          create: (context) => locator<ServicesBloc>(),
-          child: const ServicesScreen()
-      )
-    ];
+    _pages = BlocProvider.of<HomeBloc>(context).getPages;
 
     currentTabIndex = 0;
   }
@@ -66,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // ),
               BottomNavigationBarItem(
                   icon: Icon(Icons.access_time,),
-                label: 'Timing'
+                label: 'Timetable'
               ),
               // BottomNavigationBarItem(
               //     icon: Icon(Icons.new_releases_outlined),
@@ -85,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
   onTap(int index) {
     setState(() {
       currentTabIndex = index;
-      BlocProvider.of<HomeBloc>(context).add(ChangeSelectedScreenEvent(index: index));
     });
    }
 }

@@ -1,41 +1,33 @@
-import 'package:novsu_mobile/di/locator.dart';
-import 'package:novsu_mobile/features/screens/home/bloc/home_events.dart';
-import 'package:novsu_mobile/features/screens/journal/journal_screen.dart';
-import 'package:novsu_mobile/features/screens/services/services_screen.dart';
-import 'package:novsu_mobile/features/screens/timetable/timing_screen.dart';
-import 'package:novsu_mobile/features/screens/topical/topical_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:novsu_mobile/di/locator.dart';
+import 'package:novsu_mobile/features/screens/screens.dart';
+import 'package:novsu_mobile/features/screens/blocs.dart';
 
-import '../../blocs.dart';
-import 'home_states.dart';
-
-List<Widget> _pages = [
-  BlocProvider(
-      create: (context) => locator<JournalBloc>(),
-    child: const JournalScreen(),
-  ),
-  BlocProvider(
-    create: (context) => locator<TimingBloc>(),
-    child: const TimingScreen(),
-  ),
-  BlocProvider(
-    create: (context) => locator<TopicalBloc>(),
-    child: const TopicalScreen(),
-  ),
-  BlocProvider(
-    create: (context) => locator<ServicesBloc>(),
-    child: const ServicesScreen()
-  )
-];
+export 'home_events.dart';
+export 'home_states.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  final List<Widget> _pages = [
+    // BlocProvider(
+    //     create: (context) => locator<JournalBloc>(),
+    //   child: const JournalScreen(),
+    // ),
+    BlocProvider(
+      create: (context) => locator<TimingBloc>(),
+      child: const TimingScreen(),
+    ),
+    // BlocProvider(
+    //   create: (context) => locator<TopicalBloc>(),
+    //   child: const TopicalScreen(),
+    // ),
+    BlocProvider(
+        create: (context) => locator<ServicesBloc>(),
+        child: const ServicesScreen()
+    )
+  ];
 
-  HomeBloc() : super(InitHomeState(page: _pages[0])) {
-    on<ChangeSelectedScreenEvent>((event, emit) => emit(_selectPage(event.index)));
-  }
+  HomeBloc() : super(InitHomeState());
 
-  SelectedPageState _selectPage(int index) {
-    return SelectedPageState(page: _pages[index]);
-  }
+  List<Widget> get getPages => _pages;
 }

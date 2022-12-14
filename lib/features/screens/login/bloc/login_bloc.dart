@@ -8,6 +8,9 @@ import 'package:novsu_mobile/features/navigation/routes.dart';
 import 'package:novsu_mobile/features/screens/login/bloc/login_event.dart';
 import 'package:novsu_mobile/features/screens/login/bloc/login_state.dart';
 
+export 'login_event.dart';
+export 'login_state.dart';
+
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final NovsuApi novsuApi;
   final NavigationManager navigationManager;
