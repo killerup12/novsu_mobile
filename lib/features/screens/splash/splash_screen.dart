@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       answer += '\n';
     }
 
-    return Text(answer, style: TextStyle(
+    return Text(answer, style: const TextStyle(
       color: Colors.black,
       fontSize: 10
     ),);

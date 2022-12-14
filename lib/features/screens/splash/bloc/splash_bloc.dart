@@ -20,7 +20,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     required this.novsuApi,
     required this.memoryAccessProvider
   }) : super(InitSplashState()) {
-    on<GoToTheNextScreenEvent>((event, emit) async {
+    on<GoToTheNextScreenEvent>((evenfluttt, emit) async {
       await _goToTheNextScreen(emit);
     });
   }
@@ -28,12 +28,15 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
 
   _goToTheNextScreen(Emitter<SplashState> emit) async {
         try {
-          emit(StepEvent(
-              step: 'await novsuApi.getMainProfilePage(); //TODO rework')); //TODO remove
-          await novsuApi.getMainProfilePage(); //TODO rework
+          // emit(StepEvent(
+          //     step: 'await novsuApi.getMainProfilePage(); //TODO rework')); //TODO remove
+          // await novsuApi.getMainProfilePage(); //TODO rework
+
           emit(StepEvent(step: 'memoryAccessProviderl.setTimetable')); //TODO remove
+
           memoryAccessProvider.setTimetable(await novsuApi.getTimetable(
-              memoryAccessProvider.getUser().uid)); //TODO rework this shit
+              memoryAccessProvider.getUser().uid
+          )); //TODO rework this shit
           navigationManager.pushRouteWithReplacement(Routes.home);
         } on NetworkException catch (e) {
           emit(StepEvent(
