@@ -29,8 +29,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
     try {
       final User userInfo = (await novsuApi.login(Login(
-          uid: event.userName,
-          password: event.password
+          uid: event.userName.trim(),
+          password: event.password.trim()
       ))).user;
 
       memoryAccessProvider.setUser(userInfo);
