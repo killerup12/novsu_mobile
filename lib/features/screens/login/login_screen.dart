@@ -65,8 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))
                     ),
-                    child: const Text('Log in',
-                      style: TextStyle(fontSize: 15),), //TODO add to theme
+                    child: const Center(
+                      child: Text('Log in',
+                        style: TextStyle(fontSize: 30),),
+                    ), //TODO add to theme
                   ),
                 )
               ],

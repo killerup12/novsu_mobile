@@ -35,11 +35,11 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         } on NetworkException catch (e) {
           emit(StepEvent(
               step: 'NetworkException')); //TODO remove
-          navigationManager.pushRoute(Routes.login);
+          navigationManager.pushRouteWithReplacement(Routes.login);
         } on MemoryException catch (e) {
           emit(StepEvent(
               step: 'MemoryException')); //TODO remove
-          navigationManager.pushRoute(Routes.login);
+          navigationManager.pushRouteWithReplacement(Routes.login);
         }
       }
   }
