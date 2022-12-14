@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:novsu_mobile/domain/models/lesson.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
@@ -87,21 +88,27 @@ class SchoolDayWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 65,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: lessonTime,
+        Flexible(
+          child: SizedBox(
+            width: 65,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: lessonTime,
+            ),
           ),
         ),
         const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(name),  //TODO add TextStyle to app_theme
-            Text(teacher), //TODO add TextStyle to app_theme
-            Text(room) //TODO add TextStyle to app_theme
-          ],
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(name),  //TODO add TextStyle to app_theme
+              const SizedBox(height: 8),
+              Text(teacher), //TODO add TextStyle to app_theme
+              const SizedBox(height: 8),
+              Text(room) //TODO add TextStyle to app_theme
+            ],
+          ),
         )
       ],
     );
