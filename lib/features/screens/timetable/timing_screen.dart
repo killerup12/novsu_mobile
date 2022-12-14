@@ -24,7 +24,7 @@ class _TimingScreenState extends State<TimingScreen> {
     return BlocBuilder<TimingBloc, TimingState>(
       builder: (context, state) => Scaffold(
         appBar: AppBar(
-          title: const Text('Timing'),  //TODO i18n
+          title: const Text('Timetable'),  //TODO i18n
         ),
         body: SingleChildScrollView(
           child: Padding(
