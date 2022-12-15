@@ -124,10 +124,12 @@ class _LessonWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(name),  //TODO add TextStyle to app_theme
-                const SizedBox(height: 8),
-                Text(teacher), //TODO add TextStyle to app_theme
-                const SizedBox(height: 8),
-                Text(room) //TODO add TextStyle to app_theme
+
+                if (teacher.isNotEmpty) const SizedBox(height: 8) else Container(),
+                if (teacher.isNotEmpty) Text(teacher) else Container(), //TODO add TextStyle to app_theme
+
+                if (room.isNotEmpty) const SizedBox(height: 8) else Container(),
+                if (room.isNotEmpty) Text(room) else Container()//TODO add TextStyle to app_theme
               ],
             ),
           ),
