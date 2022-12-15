@@ -39,7 +39,7 @@ class SchoolDayWidget extends StatelessWidget {
       for (int i = 0; i < lessons.length; i++) {
         Lesson lesson = lessons[i];
 
-        lessonsWidgets.add(_buildLessonWidget(
+        lessonsWidgets.add(_LessonWidget(
             name: lesson.name,
             teacher: lesson.teacher,
             room: lesson.room,
@@ -54,7 +54,7 @@ class SchoolDayWidget extends StatelessWidget {
 
       return Column(children: lessonsWidgets);
     } else {
-      return _buildDayOffWidget();
+      return const _DayOffWidget();
     }
 
   }
@@ -73,14 +73,36 @@ class SchoolDayWidget extends StatelessWidget {
       ],
     );
   }
+}
 
-  Widget _buildLessonWidget({
-    required String name,
-    required String teacher,
-    required String room,
-    required List<String> time,
-    required String lessonType
-  }) {
+class _DayOffWidget extends StatelessWidget {
+  const _DayOffWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('Today you can rest'); //TODO i18n
+  }
+}
+
+
+class _LessonWidget extends StatelessWidget {
+  final String name;
+  final String teacher;
+  final String room;
+  final List<String> time;
+  final String lessonType;
+
+  const _LessonWidget({
+    Key? key,
+    required this.name,
+    required this.teacher,
+    required this.room,
+    required this.time,
+    required this.lessonType,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final List<Text> lessonTime = [];
     for (var element in time) {lessonTime.add(Text(element));} //TODO add TextStyle to app_theme
 
@@ -88,85 +110,29 @@ class SchoolDayWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Flexible(
-          child: SizedBox(
-            width: 65,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: lessonTime,
-            ),
+        SizedBox(
+          width: 65,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: lessonTime,
           ),
         ),
         const SizedBox(width: 10),
         Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(name),  //TODO add TextStyle to app_theme
-              const SizedBox(height: 8),
-              Text(teacher), //TODO add TextStyle to app_theme
-              const SizedBox(height: 8),
-              Text(room) //TODO add TextStyle to app_theme
-            ],
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name),  //TODO add TextStyle to app_theme
+                const SizedBox(height: 8),
+                Text(teacher), //TODO add TextStyle to app_theme
+                const SizedBox(height: 8),
+                Text(room) //TODO add TextStyle to app_theme
+              ],
+            ),
           ),
         )
       ],
     );
-  }
-
-  Widget _buildDayOffWidget() {
-    return const Text('Today you can rest'); //TODO i18n
-  }
-
-  String _convertIntWeekdayToString(int weekday) {
-    switch (weekday) {
-      case 1:
-        return 'Monday';  //TODO i18n
-      case 2:
-        return 'Tuesday'; //TODO i18n
-      case 3:
-        return 'Wednesday'; //TODO i18n
-      case 4:
-        return 'Thursday';  //TODO i18n
-      case 5:
-        return 'Friday';  //TODO i18n
-      case 6:
-        return 'Saturday';  //TODO i18n
-      case 7:
-        return 'Sunday';  //TODO i18n
-      default:
-        return '';
-    }
-  }
-
-  String _convertIntMonthToString(int month) {
-    switch (month) {
-      case 1:
-        return 'January'; //TODO i18n
-      case 2:
-        return 'February';  //TODO i18n
-      case 3:
-        return 'March'; //TODO i18n
-      case 4:
-        return 'April'; //TODO i18n
-      case 5:
-        return 'May'; //TODO i18n
-      case 6:
-        return 'June';  //TODO i18n
-      case 7:
-        return 'July';  //TODO i18n
-      case 8:
-        return 'August';  //TODO i18n
-      case 9:
-        return 'September'; //TODO i18n
-      case 10:
-        return 'October'; //TODO i18n
-      case 11:
-        return 'November';  //TODO i18n
-      case 12:
-        return 'December';  //TODO i18n
-      default:
-        return '';
-    }
   }
 }
