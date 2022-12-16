@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:novsu_mobile/domain/models/lesson.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
 import 'package:flutter/widgets.dart';
 
-class SchoolDayWidget extends StatelessWidget {
+class StudyDayWidget extends StatelessWidget {
   final StudyDay schoolDay;
 
-  const SchoolDayWidget({
+  const StudyDayWidget({
     Key? key,
     required this.schoolDay
   }) : super(key: key);
@@ -39,7 +38,7 @@ class SchoolDayWidget extends StatelessWidget {
       for (int i = 0; i < lessons.length; i++) {
         Lesson lesson = lessons[i];
 
-        lessonsWidgets.add(_LessonWidget(
+        lessonsWidgets.add(_buildLessonWidget(
             name: lesson.name,
             teacher: lesson.teacher,
             room: lesson.room,
@@ -54,7 +53,7 @@ class SchoolDayWidget extends StatelessWidget {
 
       return Column(children: lessonsWidgets);
     } else {
-      return const _DayOffWidget();
+      return _buildDayOffWidget();
     }
 
   }
@@ -73,38 +72,18 @@ class SchoolDayWidget extends StatelessWidget {
       ],
     );
   }
-}
 
-class _DayOffWidget extends StatelessWidget {
-  const _DayOffWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text('Today you can rest'); //TODO i18n
-  }
-}
-
-
-class _LessonWidget extends StatelessWidget {
-  final String name;
-  final String teacher;
-  final String room;
-  final List<String> time;
-  final String lessonType;
-
-  const _LessonWidget({
-    Key? key,
-    required this.name,
-    required this.teacher,
-    required this.room,
-    required this.time,
-    required this.lessonType,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildLessonWidget({
+    required String name,
+    required String teacher,
+    required String room,
+    required List<String> time,
+    required String lessonType
+  }) {
     final List<Text> lessonTime = [];
-    for (var element in time) {lessonTime.add(Text(element));} //TODO add TextStyle to app_theme
+    for (String element in time) {
+      lessonTime.add(Text(element));  //TODO add TextStyle to app_theme
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,23 +97,71 @@ class _LessonWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        Flexible(
-          child: SizedBox(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name),  //TODO add TextStyle to app_theme
-
-                if (teacher.isNotEmpty) const SizedBox(height: 8) else Container(),
-                if (teacher.isNotEmpty) Text(teacher) else Container(), //TODO add TextStyle to app_theme
-
-                if (room.isNotEmpty) const SizedBox(height: 8) else Container(),
-                if (room.isNotEmpty) Text(room) else Container()//TODO add TextStyle to app_theme
-              ],
-            ),
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(name),  //TODO add TextStyle to app_theme
+            Text(teacher), //TODO add TextStyle to app_theme
+            Text(room) //TODO add TextStyle to app_theme
+          ],
         )
       ],
     );
+  }
+
+  Widget _buildDayOffWidget() {
+    return const Text('Today you can rest'); //TODO i18n
+  }
+
+  String _convertIntWeekdayToString(int weekday) {
+    switch (weekday) {
+      case 1:
+        return 'Monday';  //TODO i18n
+      case 2:
+        return 'Tuesday'; //TODO i18n
+      case 3:
+        return 'Wednesday'; //TODO i18n
+      case 4:
+        return 'Thursday';  //TODO i18n
+      case 5:
+        return 'Friday';  //TODO i18n
+      case 6:
+        return 'Saturday';  //TODO i18n
+      case 7:
+        return 'Sunday';  //TODO i18n
+      default:
+        return '';
+    }
+  }
+
+  String _convertIntMonthToString(int month) {
+    switch (month) {
+      case 1:
+        return 'January'; //TODO i18n
+      case 2:
+        return 'February';  //TODO i18n
+      case 3:
+        return 'March'; //TODO i18n
+      case 4:
+        return 'April'; //TODO i18n
+      case 5:
+        return 'May'; //TODO i18n
+      case 6:
+        return 'June';  //TODO i18n
+      case 7:
+        return 'July';  //TODO i18n
+      case 8:
+        return 'August';  //TODO i18n
+      case 9:
+        return 'September'; //TODO i18n
+      case 10:
+        return 'October'; //TODO i18n
+      case 11:
+        return 'November';  //TODO i18n
+      case 12:
+        return 'December';  //TODO i18n
+      default:
+        return '';
+    }
   }
 }

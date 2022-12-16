@@ -1,6 +1,6 @@
 import 'package:novsu_mobile/domain/models/models.dart';
+import 'package:novsu_mobile/features/decorations/study_day_widget.dart';
 import 'package:novsu_mobile/features/screens/blocs.dart';
-import 'package:novsu_mobile/features/screens/timetable/decorations/study_day_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +48,7 @@ class _TimingScreenState extends State<TimingScreen> {
     List<Widget> lessonsWidget = [];
 
     for (StudyDay element in timetable.studyDays) {
-      lessonsWidget.add(SchoolDayWidget(schoolDay: element));
+      lessonsWidget.add(StudyDayWidget(schoolDay: element));
 
       if (element != timetable.studyDays.last) {
         lessonsWidget.add(const SizedBox(height: 20));

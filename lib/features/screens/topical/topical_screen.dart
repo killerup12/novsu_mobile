@@ -1,8 +1,8 @@
+import 'package:novsu_mobile/features/decorations/news_widget.dart';
+import 'package:novsu_mobile/features/decorations/study_day_widget.dart';
 import 'package:novsu_mobile/features/screens/blocs.dart';
 import 'package:novsu_mobile/features/screens/topical/bloc/topical_events.dart';
 import 'package:novsu_mobile/features/screens/topical/bloc/topical_states.dart';
-import 'package:novsu_mobile/features/screens/topical/decorations/news_widget.dart';
-import 'package:novsu_mobile/features/screens/topical/decorations/school_day_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,7 +63,7 @@ class _TopicalScreenState extends State<TopicalScreen> {
 
   List<Widget> buildTodayTiming(DataIsReadyForUsingState state) {
     return [
-      SchoolDayWidget(schoolDay: state.schoolDay),
+      StudyDayWidget(schoolDay: state.schoolDay),
       const SizedBox(height: 20)
     ];
   }
