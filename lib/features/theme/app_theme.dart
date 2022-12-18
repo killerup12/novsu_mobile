@@ -5,6 +5,8 @@ abstract class AppTheme {
 
   Color get colorLessonTypeLecture;
 
+  Color get colorLessonTypeLaboratory;
+
   Color get colorLessonTypePractice;
 
   Color get colorLessonTypeUnknown;

@@ -30,6 +30,7 @@ class MainTheme implements AppTheme {
   final Color _colorDarkBlue = HexColor('#015697');
   final Color _colorBlack = HexColor('#000000');
   final Color _colorGray = HexColor('#8D8D8D');
+  final Color _colorYellow = HexColor('#FEC222');
 
   ThemeData? _themeDataInstance;
 
@@ -82,7 +83,10 @@ class MainTheme implements AppTheme {
   Color get colorLessonTypeLecture => _colorBlue;
 
   @override
-  Color get colorLessonTypePractice => _colorPurple;
+  Color get colorLessonTypeLaboratory => _colorPurple;
+
+  @override
+  Color get colorLessonTypePractice => _colorYellow;
 
   @override
   Color get colorLessonTypeUnknown => _colorLightGreen;
@@ -104,7 +108,7 @@ class MainTheme implements AppTheme {
   TextStyle get textStyleForLessonTypeName => TextStyle(
     color: _colorWhite,
     fontSize: 14,
-    fontWeight: FontWeight.bold
+    fontWeight: FontWeight.w500
   );
 
   @override
@@ -134,4 +138,5 @@ class MainTheme implements AppTheme {
       fontSize: 14,
       fontWeight: FontWeight.w400
   );
+
 }

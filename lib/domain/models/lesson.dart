@@ -15,7 +15,7 @@ class Lesson extends Equatable {
   @HiveField(3)
   final String room;
   @HiveField(4)
-  final LessonTypes lessonType;
+  final List<LessonTypes> lessonType;
 
   const Lesson({
     required this.name,

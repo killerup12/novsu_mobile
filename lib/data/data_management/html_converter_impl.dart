@@ -58,16 +58,20 @@ class HtmlConverterImpl implements HtmlConverter {
         final separate = node.nodes[5].nodes[0].toString().split('\t\t\t\t\t\t\t\t');
 
         late final String name;
-        late final String lessonType;
+        late final List<LessonTypes> lessonType;
 
         try {
           name = formatter(separate[1]);
 
-          lessonType = formatter(separate[0]);
+          lessonType = [];
+
+          for (String lessonTypeString in formatter(separate[0]).replaceAll('.', '').split('/')) {
+            lessonType.add(_selectLessonType(lessonTypeString));
+          }
         } catch (e) {
           name = formatter(separate[0]);
 
-          lessonType = ''; //TODO Think about that
+          lessonType = []; //TODO Think about that
         }
 
         final String teacher = formatter(node.nodes[5].nodes[3].nodes[0].toString());
@@ -79,7 +83,7 @@ class HtmlConverterImpl implements HtmlConverter {
             name: name,
             teacher: teacher,
             room: room,
-            lessonType: _selectLessonType(lessonType)
+            lessonType: lessonType
         ));
       }
     }
@@ -99,10 +103,12 @@ class HtmlConverterImpl implements HtmlConverter {
 
   _selectLessonType(String lessonType) {
     switch (lessonType) {
-      case 'лек.':
+      case 'лек':
         return LessonTypes.lecture;
-      case 'пр.':
+      case 'пр':
         return LessonTypes.practice;
+      case 'лаб':
+        return LessonTypes.laboratory;
       default:
         return LessonTypes.unknown;
     }

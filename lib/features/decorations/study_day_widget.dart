@@ -107,35 +107,22 @@ class _LessonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Text> lessonTime = [];
-    for (String element in lesson.time) {
-      lessonTime.add(Text(element));  //TODO add TextStyle to app_theme
+    final List<Widget> lessonTypes = [];
+
+    lessonTypes.add(const SizedBox(width: 75));
+    for (LessonTypes lessonType in lesson.lessonType) {
+      lessonTypes.add(_LessonTypeWidget(
+          lessonType: lessonType
+      ));
+      if (lessonType != lesson.lessonType.last) {
+        lessonTypes.add(const SizedBox(width: 5));
+      }
     }
 
     return Column(
       children: [
         Row(
-          children: [
-            const SizedBox(width: 75),
-            Container(
-              decoration: BoxDecoration(
-                color: selectLessonTypeColor(lesson.lessonType),
-                borderRadius: BorderRadius.circular(90),
-                boxShadow: [
-                  BoxShadow(
-                    color: selectLessonTypeColor(lesson.lessonType),
-                    spreadRadius: 0.01,
-                    blurRadius: 12,
-                    offset: const Offset(0, 5),
-                  )
-                ]
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
-                child: Text(selectLessonType(lesson.lessonType), style: ThemeHelper.getAppTheme().textStyleForLessonTypeName),
-              ),
-            )
-          ],
+          children: lessonTypes,
         ),
         const SizedBox(height: 7),
         Row(
@@ -184,6 +171,38 @@ class _LessonWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+class _LessonTypeWidget extends StatelessWidget {
+  final LessonTypes lessonType;
+
+  const _LessonTypeWidget({
+    Key? key,
+    required this.lessonType
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 3),
+      decoration: BoxDecoration(
+          color: selectLessonTypeColor(lessonType),
+          borderRadius: BorderRadius.circular(90),
+          boxShadow: [
+            BoxShadow(
+              color: selectLessonTypeColor(lessonType),
+              spreadRadius: 0.01,
+              blurRadius: 12,
+              offset: const Offset(0, 5),
+            )
+          ]
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
+        child: Text(selectLessonType(lessonType), style: ThemeHelper.getAppTheme().textStyleForLessonTypeName),
+      ),
+    );
+  }
 
   String selectLessonType(LessonTypes lessonType) {
     switch (lessonType) {
@@ -191,8 +210,10 @@ class _LessonWidget extends StatelessWidget {
         return 'Lecture'; //TODO i18n
       case LessonTypes.practice:
         return 'Practice'; //TODO i18n
+      case LessonTypes.laboratory:
+        return 'Laboratory'; //TODO i18n
       default:
-        return 'Elective'; //TODO i18n
+        return 'Something Interesting...'; //TODO i18n
     }
   }
 
@@ -202,8 +223,11 @@ class _LessonWidget extends StatelessWidget {
         return ThemeHelper.getAppTheme().colorLessonTypeLecture;
       case LessonTypes.practice:
         return ThemeHelper.getAppTheme().colorLessonTypePractice;
+      case LessonTypes.laboratory:
+        return ThemeHelper.getAppTheme().colorLessonTypeLaboratory;
       default:
         return ThemeHelper.getAppTheme().colorLessonTypeUnknown;
     }
   }
 }
+

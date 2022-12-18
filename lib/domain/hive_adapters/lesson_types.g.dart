@@ -18,9 +18,9 @@ class LessonTypesAdapter extends TypeAdapter<LessonTypes> {
       case 1:
         return LessonTypes.practice;
       case 2:
-        return LessonTypes.unknown;
-      default:
         return LessonTypes.lecture;
+      default:
+        return LessonTypes.unknown;
     }
   }
 
@@ -33,8 +33,11 @@ class LessonTypesAdapter extends TypeAdapter<LessonTypes> {
       case LessonTypes.practice:
         writer.writeByte(1);
         break;
-      case LessonTypes.unknown:
+      case LessonTypes.laboratory:
         writer.writeByte(2);
+        break;
+      case LessonTypes.unknown:
+        writer.writeByte(3);
         break;
     }
   }

@@ -6,8 +6,13 @@ part '../hive_adapters/lesson_types.g.dart';
 enum LessonTypes {
   @HiveField(0)
   lecture,
+
   @HiveField(1)
   practice,
+
   @HiveField(2)
+  laboratory,
+
+  @HiveField(3)
   unknown
 }
