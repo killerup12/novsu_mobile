@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:novsu_mobile/domain/enums/lesson_types.dart';
 
 part '../hive_adapters/lesson.g.dart';
 
@@ -14,7 +15,7 @@ class Lesson extends Equatable {
   @HiveField(3)
   final String room;
   @HiveField(4)
-  final String lessonType;
+  final LessonTypes lessonType;
 
   const Lesson({
     required this.name,

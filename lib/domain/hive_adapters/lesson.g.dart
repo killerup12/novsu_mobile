@@ -21,7 +21,7 @@ class LessonAdapter extends TypeAdapter<Lesson> {
       teacher: fields[1] as String,
       time: (fields[2] as List).cast<String>(),
       room: fields[3] as String,
-      lessonType: fields[4] as String,
+      lessonType: fields[4] as LessonTypes,
     );
   }
 

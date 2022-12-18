@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:novsu_mobile/domain/enums/lesson_types.dart';
 import 'package:novsu_mobile/domain/models/lesson.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
-import 'package:flutter/widgets.dart';
 
 class StudyDayWidget extends StatelessWidget {
   final StudyDay schoolDay;
@@ -109,57 +110,23 @@ class StudyDayWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildDayOffWidget() {
-    return const Text('Today you can rest'); //TODO i18n
-  }
-
-  String _convertIntWeekdayToString(int weekday) {
-    switch (weekday) {
-      case 1:
-        return 'Monday';  //TODO i18n
-      case 2:
-        return 'Tuesday'; //TODO i18n
-      case 3:
-        return 'Wednesday'; //TODO i18n
-      case 4:
-        return 'Thursday';  //TODO i18n
-      case 5:
-        return 'Friday';  //TODO i18n
-      case 6:
-        return 'Saturday';  //TODO i18n
-      case 7:
-        return 'Sunday';  //TODO i18n
+  String selectLessonType(LessonTypes lessonType) {
+    switch (lessonType) {
+      case LessonTypes.lecture:
+        return 'Lecture'; //TODO i18n
+      case LessonTypes.practice:
+        return 'Practice'; //TODO i18n
       default:
-        return '';
+        return 'Elective'; //TODO i18n
     }
   }
 
-  String _convertIntMonthToString(int month) {
-    switch (month) {
-      case 1:
-        return 'January'; //TODO i18n
-      case 2:
-        return 'February';  //TODO i18n
-      case 3:
-        return 'March'; //TODO i18n
-      case 4:
-        return 'April'; //TODO i18n
-      case 5:
-        return 'May'; //TODO i18n
-      case 6:
-        return 'June';  //TODO i18n
-      case 7:
-        return 'July';  //TODO i18n
-      case 8:
-        return 'August';  //TODO i18n
-      case 9:
-        return 'September'; //TODO i18n
-      case 10:
-        return 'October'; //TODO i18n
-      case 11:
-        return 'November';  //TODO i18n
-      case 12:
-        return 'December';  //TODO i18n
+  Color selectLessonTypeColor(LessonTypes lessonType) {
+    switch (lessonType) {
+      case LessonTypes.lecture:
+        return ThemeHelper.getAppTheme().colorLessonTypeLecture;
+      case LessonTypes.practice:
+        return ThemeHelper.getAppTheme().colorLessonTypePractice;
       default:
         return '';
     }

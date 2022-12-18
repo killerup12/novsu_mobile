@@ -1,5 +1,6 @@
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart' as dom;
+import 'package:novsu_mobile/domain/enums/lesson_types.dart';
 
 import 'package:novsu_mobile/domain/models/lesson.dart';
 import 'package:novsu_mobile/domain/models/study_day.dart';
@@ -78,7 +79,7 @@ class HtmlConverterImpl implements HtmlConverter {
             name: name,
             teacher: teacher,
             room: room,
-            lessonType: lessonType
+            lessonType: _selectLessonType(lessonType)
         ));
       }
     }
@@ -94,6 +95,17 @@ class HtmlConverterImpl implements HtmlConverter {
         relevancePeriod: relevancePeriod,
         studyDays: studyDays
     );
+  }
+
+  _selectLessonType(String lessonType) {
+    switch (lessonType) {
+      case 'лек.':
+        return LessonTypes.lecture;
+      case 'пр.':
+        return LessonTypes.practice;
+      default:
+        return LessonTypes.unknown;
+    }
   }
 
   String formatter(String string) {

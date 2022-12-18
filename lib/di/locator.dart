@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:novsu_mobile/data/api/novsu_api.dart';
 import 'package:novsu_mobile/data/api/novsu_client.dart';
+import 'package:novsu_mobile/domain/enums/enums.dart';
 import 'package:novsu_mobile/domain/models/models.dart';
 import 'package:novsu_mobile/domain/utils/html_converter.dart';
 import 'package:novsu_mobile/data/data_management/html_converter_impl.dart';
@@ -115,5 +116,6 @@ _initHive() async {
   Hive.registerAdapter(TimetableAdapter());
   Hive.registerAdapter(StudyDayAdapter());
   Hive.registerAdapter(LessonAdapter());
+  Hive.registerAdapter(LessonTypesAdapter());
   Hive.openBox("studentData");
 }
