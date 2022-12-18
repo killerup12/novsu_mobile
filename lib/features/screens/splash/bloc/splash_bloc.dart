@@ -31,7 +31,6 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
           // emit(StepEvent(
           //     step: 'await novsuApi.getMainProfilePage(); //TODO rework')); //TODO remove
           // await novsuApi.getMainProfilePage(); //TODO rework
-
           emit(StepEvent(step: 'memoryAccessProviderl.setTimetable')); //TODO remove
 
           memoryAccessProvider.setTimetable(await novsuApi.getTimetable(

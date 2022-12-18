@@ -23,7 +23,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
               onTap: () => BlocProvider.of<ServicesBloc>(context).add(LogOutEvent()),
               child: const Icon(
                 Icons.sensor_door_outlined,
-                color: Colors.red, //TODO add to theme
               ),
             )
           ],

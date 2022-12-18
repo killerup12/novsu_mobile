@@ -1,5 +1,5 @@
 import 'package:novsu_mobile/domain/models/journal.dart';
-import 'package:novsu_mobile/features/theme/theme_helper.dart';
+import 'package:novsu_mobile/features/utils/hex_color.dart';
 import 'package:flutter/material.dart';
 
 class SubjectWidget extends StatelessWidget {
@@ -16,7 +16,7 @@ class SubjectWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       foregroundDecoration: BoxDecoration(
-        border: Border.all(color: ThemeHelper.getAppTheme().colorGreen, width: 4),
+        border: Border.all(color: HexColor('#A8D793'), width: 4), //TODO add to theme
         borderRadius: BorderRadius.circular(25),
       ),
       child: Padding(

@@ -16,14 +16,14 @@ class StudyDayWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       foregroundDecoration: BoxDecoration(
-        border: Border.all(color: ThemeHelper.getAppTheme().colorGreen, width: 4),
+        border: Border.all(color: ThemeHelper.getAppTheme().colorStudyDayBorder, width: 4),
         borderRadius: BorderRadius.circular(25),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30.0),
         child: Column(
           children: [
-            _buildDayInformationPart(schoolDay.dayOfTheWeek),
+            _DayInformationPart(dayOfTheWeek: schoolDay.dayOfTheWeek),
             const SizedBox(height: 10),
             _buildLessonsPart(schoolDay.lessons)
           ],
@@ -39,12 +39,8 @@ class StudyDayWidget extends StatelessWidget {
       for (int i = 0; i < lessons.length; i++) {
         Lesson lesson = lessons[i];
 
-        lessonsWidgets.add(_buildLessonWidget(
-            name: lesson.name,
-            teacher: lesson.teacher,
-            room: lesson.room,
-            time: lesson.time,
-            lessonType: lesson.lessonType
+        lessonsWidgets.add(_LessonWidget(
+            lesson: lesson,
         ));
 
         if (i != lessons.length - 1) {
@@ -54,12 +50,22 @@ class StudyDayWidget extends StatelessWidget {
 
       return Column(children: lessonsWidgets);
     } else {
-      return _buildDayOffWidget();
+      return const _DayOffWidget();
     }
 
   }
+}
 
-  Widget _buildDayInformationPart(String dayOfTheWeek) {
+class _DayInformationPart extends StatelessWidget {
+  final String dayOfTheWeek;
+
+  const _DayInformationPart({
+    Key? key,
+    required this.dayOfTheWeek
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -67,45 +73,114 @@ class StudyDayWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(dayOfTheWeek), //TODO add TextStyle to app_theme
+            Text(dayOfTheWeek, style: ThemeHelper.getAppTheme().textStyleForDayOfTheWeek,)
           ],
         ),
       ],
-    );
+    );;
   }
+}
 
-  Widget _buildLessonWidget({
-    required String name,
-    required String teacher,
-    required String room,
-    required List<String> time,
-    required String lessonType
-  }) {
+class _DayOffWidget extends StatelessWidget {
+  const _DayOffWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text('Today you can rest'); //TODO i18n
+  }
+}
+
+
+class _LessonWidget extends StatelessWidget {
+  final Lesson lesson;
+
+  final bool hasNotTeacher;
+  final bool hasNotRoom;
+
+  _LessonWidget({
+    Key? key,
+    required this.lesson
+  }) :
+      hasNotTeacher = (lesson.teacher.isEmpty) ? true : false,
+      hasNotRoom = (lesson.room.isEmpty) ? true : false,
+        super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final List<Text> lessonTime = [];
-    for (String element in time) {
+    for (String element in lesson.time) {
       lessonTime.add(Text(element));  //TODO add TextStyle to app_theme
     }
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
       children: [
-        SizedBox(
-          width: 65,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: lessonTime,
-          ),
-        ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-            Text(name),  //TODO add TextStyle to app_theme
-            Text(teacher), //TODO add TextStyle to app_theme
-            Text(room) //TODO add TextStyle to app_theme
+            const SizedBox(width: 75),
+            Container(
+              decoration: BoxDecoration(
+                color: selectLessonTypeColor(lesson.lessonType),
+                borderRadius: BorderRadius.circular(90),
+                boxShadow: [
+                  BoxShadow(
+                    color: selectLessonTypeColor(lesson.lessonType),
+                    spreadRadius: 0.01,
+                    blurRadius: 12,
+                    offset: const Offset(0, 5),
+                  )
+                ]
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2.5, horizontal: 5),
+                child: Text(selectLessonType(lesson.lessonType), style: ThemeHelper.getAppTheme().textStyleForLessonTypeName),
+              ),
+            )
           ],
-        )
+        ),
+        const SizedBox(height: 7),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 65,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(lesson.time.first, style: ThemeHelper.getAppTheme().textStyleForStartingLessonTime),
+                  Text(lesson.time.last, style: ThemeHelper.getAppTheme().textStyleForEndingLessonTime,)
+                ],
+              ),
+            ),
+            const SizedBox(width: 10),
+            Flexible(
+              child: SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(lesson.name, style: ThemeHelper.getAppTheme().textStyleForDisciplineName),
+                    const SizedBox(height: 5),
+                    (hasNotTeacher) ? Container() : Row(
+                      children: [
+                        Icon(Icons.person,  color: ThemeHelper.getAppTheme().colorDisciplineDetails, size: 14),
+                        const SizedBox(width: 5),
+                        Text(lesson.teacher, style: ThemeHelper.getAppTheme().textStyleForDisciplineDetails),
+                      ],
+                    ),
+                    const SizedBox(height: 3),
+                    (hasNotRoom) ? Container() : Row(
+                      children: [
+                        Icon(Icons.location_on,  color: ThemeHelper.getAppTheme().colorDisciplineDetails, size: 14),
+                        const SizedBox(width: 5),
+                        Text(lesson.room, style: ThemeHelper.getAppTheme().textStyleForDisciplineDetails),
+                      ],
+                    ) //TODO add TextStyle to app_theme
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
@@ -128,7 +203,7 @@ class StudyDayWidget extends StatelessWidget {
       case LessonTypes.practice:
         return ThemeHelper.getAppTheme().colorLessonTypePractice;
       default:
-        return '';
+        return ThemeHelper.getAppTheme().colorLessonTypeUnknown;
     }
   }
 }
