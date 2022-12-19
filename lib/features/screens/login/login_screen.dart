@@ -13,6 +13,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final loginTextController = TextEditingController();
   final passwordTextController = TextEditingController();
 
+  late final LoginBloc bloc;
+
+  @override
+  void initState() {
+    bloc = BlocProvider.of<LoginBloc>(context);
+    super.initState();
+  }
+
   @override
   void dispose() {
     loginTextController.dispose();
@@ -23,54 +31,57 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
-        builder: (context, state) => Scaffold(
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: loginTextController,
-                    readOnly: checkIsWaitingResponse(state),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'login',
-                  ),),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: passwordTextController,
-                    readOnly: checkIsWaitingResponse(state),
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'password'
+        builder: (context, state) => GestureDetector(
+          onTap: () => hideKeyboard(),
+          child: Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: loginTextController,
+                      readOnly: checkIsWaitingResponse(state),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'login',
+                    ),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: passwordTextController,
+                      readOnly: checkIsWaitingResponse(state),
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'password'
+                      ),
                     ),
                   ),
-                ),
-                state is WaitingResponseLoginState
-                ? const CircularProgressIndicator()
-                : GestureDetector(
-                  onTap: () => BlocProvider.of<LoginBloc>(context).add(LoginToTheAccount(
-                      userName: loginTextController.text,
-                      password: passwordTextController.text
-                  )),
-                  child: Container(
-                    height: 70,
-                    width: 300,
-                    decoration: const BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))
+                  state is WaitingResponseLoginState
+                  ? const CircularProgressIndicator()
+                  : GestureDetector(
+                    onTap: () => tryToLogIn(
+                        loginTextController.text,
+                        passwordTextController.text
                     ),
-                    child: const Center(
-                      child: Text('Log in',
-                        style: TextStyle(fontSize: 30),),
-                    ), //TODO add to theme
-                  ),
-                )
-              ],
-            )
+                    child: Container(
+                      height: 70,
+                      width: 300,
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+                      child: const Center(
+                        child: Text('Log in',
+                          style: TextStyle(fontSize: 30),),
+                      ), //TODO add to theme
+                    ),
+                  )
+                ],
+              )
+            ),
           ),
         )
     );
@@ -78,6 +89,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool checkIsWaitingResponse(LoginState state) {
     return (state is WaitingResponseLoginState);
+  }
+
+  tryToLogIn(String uid, String password) {
+    bloc.add(LoginToTheAccount(
+        userName: loginTextController.text,
+        password: passwordTextController.text
+    ));
+  }
+
+  hideKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 }
 
