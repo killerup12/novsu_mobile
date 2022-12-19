@@ -80,16 +80,16 @@ class MainTheme implements AppTheme {
   ThemeData get theme => _getThemeData();
 
   @override
-  Color get colorLessonTypeLecture => _colorBlue;
+  Color get colorLessonTypeLecture => _colorLightGreen;
 
   @override
   Color get colorLessonTypeLaboratory => _colorPurple;
 
   @override
-  Color get colorLessonTypePractice => _colorYellow;
+  Color get colorLessonTypePractice => _colorBlue;
 
   @override
-  Color get colorLessonTypeUnknown => _colorLightGreen;
+  Color get colorLessonTypeUnknown => _colorYellow;
 
   @override
   Color get colorStudyDayBorder => _colorSkyBlue;
