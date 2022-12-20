@@ -4,6 +4,7 @@ import 'package:novsu_mobile/features/theme/theme_helper.dart';
 import 'package:novsu_mobile/features/utils/simple_bloc_delegate.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 
 import 'di/locator.dart';
 
@@ -24,6 +25,10 @@ void main() async {
 class FivePlus extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return  MaterialApp(
           debugShowCheckedModeBanner: true,
           title: "FivePlus",
