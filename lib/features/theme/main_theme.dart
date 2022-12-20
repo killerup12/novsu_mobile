@@ -15,7 +15,7 @@ Map<int, Color> _colorMaterialDarkBlue = {
   900: const  Color.fromRGBO(1, 86, 151, 1),
 };
 
-final MaterialColor _materialColorGreen = MaterialColor(0xFF0F6C4F, _colorMaterialDarkBlue);
+final MaterialColor _materialColorGreen = MaterialColor(0x015697, _colorMaterialDarkBlue);
 
 
 class MainTheme implements AppTheme {
@@ -68,16 +68,38 @@ class MainTheme implements AppTheme {
           backgroundColor: _colorWhite,
           selectedItemColor: _colorDarkBlue,
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+                width: 4,
+                color: _colorDarkBlue
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(90.0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 4,
+              color: _colorBlue
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(90.0)),
+          ),
+        ),
         scaffoldBackgroundColor: _colorWhite,
         errorColor: _colorRed,
         colorScheme: ColorScheme.fromSwatch().copyWith(secondary: _materialColorGreen),
       );
 
-    return _themeDataInstance!;  //TODO needs be refactored
+    return _themeDataInstance ?? ThemeData.light();
   }
 
   @override
   ThemeData get theme => _getThemeData();
+
+  @override
+  Color get colorLoginButton => _colorDarkBlue;
+
+  @override
+  Color get colorShadowForLoginButton => _colorDarkBlue;
 
   @override
   Color get colorLessonTypeLecture => _colorLightGreen;
@@ -96,6 +118,13 @@ class MainTheme implements AppTheme {
 
   @override
   Color get colorDisciplineDetails => _colorGray;
+
+
+  @override
+  TextStyle get textStyleForLoginButton => TextStyle(
+    color: _colorWhite,
+    fontSize: 30,
+  );
 
   @override
   TextStyle get textStyleForDayOfTheWeek => TextStyle(
@@ -138,5 +167,4 @@ class MainTheme implements AppTheme {
       fontSize: 14,
       fontWeight: FontWeight.w400
   );
-
 }

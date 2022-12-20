@@ -1,6 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:novsu_mobile/features/screens/login/bloc/login_bloc.dart';
+import 'package:novsu_mobile/features/theme/theme_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -10,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  static const String logo = 'assets/images/logo.png';
+
   final loginTextController = TextEditingController();
   final passwordTextController = TextEditingController();
 
@@ -38,27 +43,34 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    width: 200,
+                      child: Image.asset(logo)
+                  ),
+                  Container(
+                    width: 300,
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: loginTextController,
                       readOnly: checkIsWaitingResponse(state),
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'login',
+                        hintText: 'login',  //TODO i18n
                     ),),
                   ),
-                  Padding(
+                  Container(
+                    width: 300,
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       controller: passwordTextController,
                       readOnly: checkIsWaitingResponse(state),
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'password'
+                        hintText: 'password', //TODO i18n
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
                   state is WaitingResponseLoginState
                   ? const CircularProgressIndicator()
                   : GestureDetector(
@@ -68,15 +80,22 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: Container(
                       height: 70,
-                      width: 300,
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      width: 200,
+                      decoration: BoxDecoration(
+                        color: ThemeHelper.getAppTheme().colorLoginButton,
+                        borderRadius: const BorderRadius.all(Radius.circular(90)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: ThemeHelper.getAppTheme().colorShadowForLoginButton,
+                            spreadRadius: 0.01,
+                            blurRadius: 12,
+                            offset: const Offset(0, 0),
+                          )
+                        ]
                       ),
-                      child: const Center(
-                        child: Text('Log in',
-                          style: TextStyle(fontSize: 30),),
-                      ), //TODO add to theme
+                      child: Center(
+                        child: Text('Log in', style: ThemeHelper.getAppTheme().textStyleForLoginButton),
+                      ),
                     ),
                   )
                 ],

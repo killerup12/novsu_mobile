@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 abstract class AppTheme {
   ThemeData get theme;
 
+  Color get colorLoginButton;
+
+  Color get colorShadowForLoginButton;
+
   Color get colorLessonTypeLecture;
 
   Color get colorLessonTypeLaboratory;
@@ -14,6 +18,8 @@ abstract class AppTheme {
   Color get colorStudyDayBorder;
 
   Color get colorDisciplineDetails;
+
+  TextStyle get textStyleForLoginButton;
 
   TextStyle get textStyleForDayOfTheWeek;
 
