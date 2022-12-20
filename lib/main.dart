@@ -19,10 +19,12 @@ void main() async {
 
   Bloc.observer = SimpleBlocDelegate();
 
-  runApp(FivePlus());
+  runApp(const NovsuMobile());
 }
 
-class FivePlus extends StatelessWidget {
+class NovsuMobile extends StatelessWidget {
+  const NovsuMobile({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
