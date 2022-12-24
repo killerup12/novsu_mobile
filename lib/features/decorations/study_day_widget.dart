@@ -124,7 +124,7 @@ class _LessonWidget extends StatelessWidget {
         Row(
           children: lessonTypes,
         ),
-        const SizedBox(height: 7),
+        const SizedBox(height: 8.5), //7
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
