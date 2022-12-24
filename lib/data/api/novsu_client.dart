@@ -44,6 +44,11 @@ class NovsuClient implements NovsuApi {
           'remember': 'on'
         },
       );
+      if (response.data?['status'] == 'error') {
+        response.statusCode = 401;
+      } else if ((response.data?['status'] == 'redirect') & (response.data?['user']['uid'] as String).isEmpty) {
+        response.statusCode = 400;
+      }
       final json =  _returnResponse(response);
 
       return SignedIn.fromJSON(json);
