@@ -11,3 +11,8 @@ class WaitingResponseLoginState extends LoginState {
   @override
   List<Object?> get props => [];
 }
+
+class WrongLoginOrPasswordState extends LoginState {
+  @override
+  List<Object?> get props => [];
+}
