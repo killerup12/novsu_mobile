@@ -13,8 +13,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  //TODO remove Landscape mode from this app
-
   await initLocator();
 
   Bloc.observer = SimpleBlocDelegate();
@@ -33,7 +31,7 @@ class NovsuMobile extends StatelessWidget {
     ]);
     return  MaterialApp(
           debugShowCheckedModeBanner: true,
-          title: "FivePlus",
+          title: "NovsuMobile",
           theme: ThemeHelper.getAppTheme().theme,
           navigatorKey: locator(),
           initialRoute: Routes.splash,
