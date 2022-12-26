@@ -74,15 +74,21 @@ class MainTheme implements AppTheme {
                 width: 4,
                 color: _colorDarkBlue
             ),
-            borderRadius: BorderRadius.all(Radius.circular(90.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(90.0)),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               width: 4,
               color: _colorBlue
             ),
-            borderRadius: BorderRadius.all(Radius.circular(90.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(90.0)),
           ),
+          errorBorder: OutlineInputBorder(
+
+          )
+        ),
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: _colorDarkBlue
         ),
         scaffoldBackgroundColor: _colorWhite,
         errorColor: _colorRed,
@@ -96,7 +102,10 @@ class MainTheme implements AppTheme {
   ThemeData get theme => _getThemeData();
 
   @override
-  Color get colorLoginButton => _colorDarkBlue;
+  Color get enableActionButton => _colorDarkBlue;
+
+  @override
+  Color get disableActionButton => _colorGray;
 
   @override
   Color get colorShadowForLoginButton => _colorDarkBlue;

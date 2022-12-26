@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:novsu_mobile/features/screens/login/bloc/login_bloc.dart';
@@ -17,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final loginTextController = TextEditingController();
   final passwordTextController = TextEditingController();
+  final validationKey = GlobalKey<FormState>();
 
   late final LoginBloc bloc;
 
@@ -35,7 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
+    return BlocConsumer<LoginBloc, LoginState>(
+      listener: (context, state) {
+
+      },
         builder: (context, state) => GestureDetector(
           onTap: () => hideKeyboard(),
           child: Scaffold(
@@ -52,17 +54,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 300,
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+
+                        });
+                      },
+                      autocorrect: false,
                       controller: loginTextController,
                       readOnly: checkIsWaitingResponse(state),
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
                         hintText: 'login',  //TODO i18n
-                    ),),
+                      ),
+                    ),
                   ),
                   Container(
                     width: 300,
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+
+                        });
+                      },
+                      autocorrect: false,
                       controller: passwordTextController,
                       readOnly: checkIsWaitingResponse(state),
                       decoration: const InputDecoration(
@@ -71,32 +85,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  state is WaitingResponseLoginState
-                  ? const CircularProgressIndicator()
-                  : GestureDetector(
+
+                  if (state is WaitingResponseLoginState)
+                    const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 17),
+                        child: CircularProgressIndicator()
+                  )
+                  else  _LoginButton(
                     onTap: () => tryToLogIn(
-                        loginTextController.text,
-                        passwordTextController.text
+                      loginTextController.text,
+                      passwordTextController.text
                     ),
-                    child: Container(
-                      height: 70,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        color: ThemeHelper.getAppTheme().colorLoginButton,
-                        borderRadius: const BorderRadius.all(Radius.circular(90)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ThemeHelper.getAppTheme().colorShadowForLoginButton,
-                            spreadRadius: 0.01,
-                            blurRadius: 12,
-                            offset: const Offset(0, 0),
-                          )
-                        ]
-                      ),
-                      child: Center(
-                        child: Text('Log in', style: ThemeHelper.getAppTheme().textStyleForLoginButton),
-                      ),
-                    ),
+                    isEnable: checkLoginButtonIsReady(),
                   )
                 ],
               )
@@ -110,7 +110,16 @@ class _LoginScreenState extends State<LoginScreen> {
     return (state is WaitingResponseLoginState);
   }
 
+  bool checkLoginButtonIsReady() {
+    if (loginTextController.text.isNotEmpty & passwordTextController.text.isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   tryToLogIn(String uid, String password) {
+    hideKeyboard();
     bloc.add(LoginToTheAccount(
         userName: loginTextController.text,
         password: passwordTextController.text
@@ -122,5 +131,55 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
+class _LoginButton extends StatelessWidget {
+  final VoidCallback onTap;
+  final bool isEnable;
 
+  const _LoginButton({
+    Key? key,
+    required this.onTap,
+    required this.isEnable
+  }) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: isEnable ? onTap : () {},
+      child: Container(
+        height: 70,
+        width: 200,
+        decoration: BoxDecoration(
+            color: _getButtonStateColor(isEnable),
+            borderRadius: const BorderRadius.all(Radius.circular(90)),
+            boxShadow: [
+              isEnable == true ? BoxShadow(
+                color: ThemeHelper.getAppTheme().colorShadowForLoginButton,
+                spreadRadius: 0.01,
+                blurRadius: 12,
+                offset: const Offset(0, 0),
+              ) : const BoxShadow()
+            ]
+        ),
+        child: Center(
+          child: Text('Log in', style: ThemeHelper.getAppTheme().textStyleForLoginButton),
+        ),
+      ),
+    );
+  }
+
+  Color _getButtonStateColor(bool isEnable) {
+    if (isEnable) {
+      return ThemeHelper.getAppTheme().enableActionButton;
+    } else {
+      return ThemeHelper.getAppTheme().disableActionButton;
+    }
+  }
+
+  Color? _getShadowStateColor(bool isEnable) {
+    if (isEnable) {
+      return ThemeHelper.getAppTheme().enableActionButton;
+    } else {
+      return null;
+    }
+  }
+}

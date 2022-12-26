@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 abstract class AppTheme {
   ThemeData get theme;
 
-  Color get colorLoginButton;
+  Color get enableActionButton;
+
+  Color get disableActionButton;
 
   Color get colorShadowForLoginButton;
 
