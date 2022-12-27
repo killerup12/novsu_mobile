@@ -2,7 +2,7 @@
     package="ru.gregory.dev.novsu_mobile">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="novsu_mobile"
+        android:label="Novsu"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
