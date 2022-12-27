@@ -11,6 +11,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin{
+  static const String logo = 'assets/images/logo.png';
+
   late final AnimationController controller;
   late final Animation<double> sizeAnimation;
 
@@ -53,11 +55,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const ColoredBox(
-                        color: Colors.blue,
-                        child: SizedBox.square(dimension: 50,), //TODO add normal image!!
+                      Image.asset(logo,
+                        width: 133,
                       ),
-                      getSteps() //TODO remove
                     ],
                   )
               ))
