@@ -28,9 +28,9 @@ final locator = GetIt.instance;
 
 Future<void> initLocator() async {
   await _initNetwork();
+  await _initHive();
   _initNavigation();
   _initUtils();
-  _initHive();
   _initBlocs();
 }
 
@@ -117,5 +117,5 @@ _initHive() async {
   Hive.registerAdapter(StudyDayAdapter());
   Hive.registerAdapter(LessonAdapter());
   Hive.registerAdapter(LessonTypesAdapter());
-  Hive.openBox("studentData");
+  await Hive.openBox("studentData");
 }
