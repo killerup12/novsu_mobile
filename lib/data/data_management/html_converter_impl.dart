@@ -23,8 +23,15 @@ class HtmlConverterImpl implements HtmlConverter {
     final pars = parser.parse(html);
 
     final aboutStudentsGroup = pars.getElementsByTagName('html h3');
-    final List<dom.Element> domTiming = pars.getElementsByTagName('tr')
-      ..removeRange(0, 3);
+
+    late final List<dom.Element> domTiming;
+
+    if (pars.getElementsByTagName('tr').length > 2) {
+      domTiming = pars.getElementsByTagName('tr')
+        ..removeRange(0, 3);
+    } else {
+      domTiming = [];
+    }
 
     String studentsGroup = formatter(aboutStudentsGroup.first.nodes[0].toString());
     String relevancePeriod = formatter(aboutStudentsGroup.last.nodes[0].toString());
@@ -88,12 +95,13 @@ class HtmlConverterImpl implements HtmlConverter {
       }
     }
 
-    final localList = [...lessons];
-    studyDays.add(StudyDay(
-        shortWeekDay: dayOfTheWeek,
-        lessons: localList
-    ));
-
+    if (domTiming.isNotEmpty) {
+      final localList = [...lessons];
+      studyDays.add(StudyDay(
+          shortWeekDay: dayOfTheWeek,
+          lessons: localList
+      ));
+    }
     return Timetable(
         forGroup: studentsGroup,
         relevancePeriod: relevancePeriod,
