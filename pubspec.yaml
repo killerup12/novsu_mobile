@@ -60,6 +60,15 @@ dependencies:
 
   hive_flutter: ^1.1.0
 
+  flutter_native_splash: ^2.2.16
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/launch_image.jpg
+  android: true
+  ios: true
+  ios_content_mode: center
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
