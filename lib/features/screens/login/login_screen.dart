@@ -69,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: const InputDecoration(
                         hintText: 'login',  //TODO i18n
                       ),
+                      textInputAction: TextInputAction.next,
                     ),
                   ),
                   Container(
@@ -85,6 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       readOnly: checkIsWaitingResponse(state),
                       decoration: const InputDecoration(
                         hintText: 'password', //TODO i18n
+                      ),
+                      textInputAction: TextInputAction.done,
+                      onEditingComplete: () => tryToLogIn(
+                          loginTextController.text,
+                          passwordTextController.text
                       ),
                     ),
                   ),
