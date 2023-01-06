@@ -108,7 +108,13 @@ class MainTheme implements AppTheme {
   Color get disableActionButton => _colorGray;
 
   @override
+  Color get errorActionButton => _colorRed;
+
+  @override
   Color get colorShadowForLoginButton => _colorDarkBlue;
+
+  @override
+  Color get colorErrorShadowForLoginButton => _colorRed;
 
   @override
   Color get colorLessonTypeLecture => _colorLightGreen;

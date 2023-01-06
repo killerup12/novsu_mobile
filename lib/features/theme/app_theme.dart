@@ -7,7 +7,11 @@ abstract class AppTheme {
 
   Color get disableActionButton;
 
+  Color get errorActionButton;
+
   Color get colorShadowForLoginButton;
+
+  Color get colorErrorShadowForLoginButton;
 
   Color get colorLessonTypeLecture;
 

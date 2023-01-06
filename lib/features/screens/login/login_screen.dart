@@ -20,6 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late final LoginBloc bloc;
 
+  bool isSomethingWrong = false;
+
   @override
   void initState() {
     bloc = BlocProvider.of<LoginBloc>(context);
@@ -37,7 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
-
+        if (state is WrongLoginOrPasswordState) {
+          isSomethingWrong = true;
+        }
       },
         builder: (context, state) => GestureDetector(
           onTap: () => hideKeyboard(),
@@ -107,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       passwordTextController.text
                     ),
                     isEnable: checkLoginButtonIsReady(),
+                    isSomethingWrong: isSomethingWrong,
                   )
                 ],
               )
@@ -130,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   tryToLogIn(String uid, String password) {
     hideKeyboard();
+    isSomethingWrong = false;
     bloc.add(LoginToTheAccount(
         userName: loginTextController.text,
         password: passwordTextController.text
@@ -144,14 +150,20 @@ class _LoginScreenState extends State<LoginScreen> {
 class _LoginButton extends StatefulWidget {
   final Color _enableColor = ThemeHelper.getAppTheme().enableActionButton;
   final Color _disableColor = ThemeHelper.getAppTheme().disableActionButton;
+  final Color _errorColor = ThemeHelper.getAppTheme().errorActionButton;
+
+  final Color _enableShadow = ThemeHelper.getAppTheme().colorShadowForLoginButton;
+  final Color _errorShadow = ThemeHelper.getAppTheme().colorErrorShadowForLoginButton;
 
   final VoidCallback onTap;
   final bool isEnable;
+  bool isSomethingWrong;
 
   _LoginButton({
     Key? key,
     required this.onTap,
-    required this.isEnable
+    required this.isEnable,
+    this.isSomethingWrong = false
   }) : super(key: key);
 
   @override
@@ -165,8 +177,18 @@ class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderSta
   @override
   void initState() {
     controller = AnimationController(duration: const Duration(milliseconds: 70), vsync: this);
-    animation = ColorTween(begin: widget._disableColor, end: widget._enableColor).animate(controller);
+    if (widget.isSomethingWrong) {
+      animation = ColorTween(begin: widget._disableColor, end: widget._errorColor).animate(controller);
+    } else {
+      animation = ColorTween(begin: widget._disableColor, end: widget._enableColor).animate(controller);
+    }
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -184,7 +206,7 @@ class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderSta
               borderRadius: const BorderRadius.all(Radius.circular(90)),
               boxShadow: [
                 BoxShadow(
-                  color: ThemeHelper.getAppTheme().colorShadowForLoginButton,
+                  color: widget.isSomethingWrong ? widget._errorShadow : widget._enableShadow,
                   spreadRadius: 0.01,
                   blurRadius: 12 * controller.value,
                   offset: const Offset(0, 0),
