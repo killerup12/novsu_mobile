@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:novsu_mobile/features/navigation/hero_tags.dart';
 import 'package:novsu_mobile/features/screens/login/bloc/login_bloc.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
 
@@ -48,7 +49,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                     width: 200,
-                      child: Image.asset(logo)
+                      child: Hero(
+                          tag: HeroTags.splashToLogin,
+                          child: Image.asset(logo)
+                      )
                   ),
                   Container(
                     width: 300,

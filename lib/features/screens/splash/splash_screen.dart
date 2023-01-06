@@ -1,3 +1,4 @@
+import 'package:novsu_mobile/features/navigation/hero_tags.dart';
 import 'package:novsu_mobile/features/screens/splash/bloc/splash_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,8 +56,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(logo,
-                        width: 133,
+                      Hero(
+                        tag: HeroTags.splashToLogin,
+                        child: Image.asset(logo,
+                          width: 133,
+                        ),
                       ),
                     ],
                   )
