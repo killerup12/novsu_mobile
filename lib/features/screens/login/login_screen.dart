@@ -141,54 +141,69 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-class _LoginButton extends StatelessWidget {
+class _LoginButton extends StatefulWidget {
+  final Color _enableColor = ThemeHelper.getAppTheme().enableActionButton;
+  final Color _disableColor = ThemeHelper.getAppTheme().disableActionButton;
+
   final VoidCallback onTap;
   final bool isEnable;
 
-  const _LoginButton({
+  _LoginButton({
     Key? key,
     required this.onTap,
     required this.isEnable
   }) : super(key: key);
 
   @override
+  State<_LoginButton> createState() => _LoginButtonState();
+}
+
+class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderStateMixin {
+  late Animation<Color?> animation;
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    controller = AnimationController(duration: const Duration(milliseconds: 70), vsync: this);
+    animation = ColorTween(begin: widget._disableColor, end: widget._enableColor).animate(controller);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: isEnable ? onTap : () {},
-      child: Container(
-        height: 70,
-        width: 200,
-        decoration: BoxDecoration(
-            color: _getButtonStateColor(isEnable),
-            borderRadius: const BorderRadius.all(Radius.circular(90)),
-            boxShadow: [
-              isEnable == true ? BoxShadow(
-                color: ThemeHelper.getAppTheme().colorShadowForLoginButton,
-                spreadRadius: 0.01,
-                blurRadius: 12,
-                offset: const Offset(0, 0),
-              ) : const BoxShadow()
-            ]
-        ),
-        child: Center(
-          child: Text('Log in', style: ThemeHelper.getAppTheme().textStyleForLoginButton),
+    return AnimatedBuilder(
+      animation: animation,
+      builder: (context, child) => InkWell(
+        onTap: animationHelper(),
+        child: Container(
+          height: 70,
+          width: 200,
+          decoration: BoxDecoration(
+              color: animation.value,
+              borderRadius: const BorderRadius.all(Radius.circular(90)),
+              boxShadow: [
+                BoxShadow(
+                  color: ThemeHelper.getAppTheme().colorShadowForLoginButton,
+                  spreadRadius: 0.01,
+                  blurRadius: 12 * controller.value,
+                  offset: const Offset(0, 0),
+                )
+              ]
+          ),
+          child: Center(
+            child: Text('Log in', style: ThemeHelper.getAppTheme().textStyleForLoginButton),
+          ),
         ),
       ),
     );
   }
 
-  Color _getButtonStateColor(bool isEnable) {
-    if (isEnable) {
-      return ThemeHelper.getAppTheme().enableActionButton;
+  VoidCallback? animationHelper() {
+    if (widget.isEnable) {
+      controller.forward();
+      return widget.onTap;
     } else {
-      return ThemeHelper.getAppTheme().disableActionButton;
-    }
-  }
-
-  Color? _getShadowStateColor(bool isEnable) {
-    if (isEnable) {
-      return ThemeHelper.getAppTheme().enableActionButton;
-    } else {
+      controller.reverse();
       return null;
     }
   }
