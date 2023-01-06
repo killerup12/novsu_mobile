@@ -174,6 +174,7 @@ class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderSta
     return AnimatedBuilder(
       animation: animation,
       builder: (context, child) => InkWell(
+        borderRadius: BorderRadius.circular(90),
         onTap: animationHelper(),
         child: Container(
           height: 70,
