@@ -38,7 +38,10 @@ _initNetwork() async {
   final appDocumentDir = await path_provider.getApplicationDocumentsDirectory();
   final PersistCookieJar cookieJar = PersistCookieJar(storage: FileStorage('${appDocumentDir.path}/.cookies/'));
 
-  Dio dio = Dio(BaseOptions(validateStatus: (status) => true));
+  Dio dio = Dio(BaseOptions(
+      validateStatus: (status) => true,
+      connectTimeout: 20000
+  ));
   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
       (HttpClient client) {
     client.badCertificateCallback =
