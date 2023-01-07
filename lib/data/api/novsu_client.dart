@@ -97,7 +97,9 @@ class NovsuClient implements NovsuApi {
 
   _handleDioError(DioError dioError) {
     if (dioError.error is SocketException) {
-      throw NoInternetConnectionException();
+      throw NoInternetConnectionException('No fucking idea what\'s happening');
+    } else if ((dioError.error is String) && dioError.error.contains('Connecting timed out')) {
+      throw NoInternetConnectionException('The device has too long response time. Check your internet connection');
     } else {
       throw dioError.error;
     }
