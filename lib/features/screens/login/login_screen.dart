@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:novsu_mobile/features/navigation/hero_tags.dart';
 import 'package:novsu_mobile/features/screens/login/bloc/login_bloc.dart';
 import 'package:novsu_mobile/features/theme/theme_helper.dart';
@@ -42,6 +44,13 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state is WrongLoginOrPasswordState) {
           isSomethingWrong = true;
+          showTopSnackBar(
+            Overlay.of(context)!,
+            CustomSnackBar.error(
+              message: state.message,
+            ),
+            animationDuration: const Duration(seconds: 2)
+          );
         }
       },
         builder: (context, state) => GestureDetector(

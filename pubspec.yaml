@@ -61,6 +61,7 @@ dependencies:
   hive_flutter: ^1.1.0
 
   flutter_native_splash: ^2.2.16
+  top_snackbar_flutter: ^3.0.0+1
 
 flutter_native_splash:
   color: "#ffffff"
