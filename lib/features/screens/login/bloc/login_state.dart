@@ -13,6 +13,14 @@ class WaitingResponseLoginState extends LoginState {
 }
 
 class WrongLoginOrPasswordState extends LoginState {
+  final String message;
+
+  WrongLoginOrPasswordState({
+    required this.message
+  });
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+    message
+  ];
 }
