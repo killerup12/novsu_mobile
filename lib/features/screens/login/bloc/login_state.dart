@@ -12,10 +12,10 @@ class WaitingResponseLoginState extends LoginState {
   List<Object?> get props => [];
 }
 
-class WrongLoginOrPasswordState extends LoginState {
+class ErrorLoginScreenState extends LoginState {
   final String message;
 
-  WrongLoginOrPasswordState({
+  ErrorLoginScreenState({
     required this.message
   });
 

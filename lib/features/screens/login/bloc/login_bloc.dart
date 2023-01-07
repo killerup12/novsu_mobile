@@ -41,15 +41,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       navigationManager.pushRouteWithReplacement(Routes.home);
     } on UnauthorizedException catch (e) {
-      emit(WrongLoginOrPasswordState(
+      emit(ErrorLoginScreenState(
         message: 'Wrong login or password!' //TODO i18n
       ));
     } on BadRequestException catch(e) {
-      emit(WrongLoginOrPasswordState(
+      emit(ErrorLoginScreenState(
         message: 'Wrong login or password!' //TODO i18n
       ));
     } on NoInternetConnectionException catch(e) {
-      emit(WrongLoginOrPasswordState(
+      emit(ErrorLoginScreenState(
           message: 'No internet connection! Try to log in later!' //TODO i18n
       ));
     }

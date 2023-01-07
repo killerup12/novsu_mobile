@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
-        if (state is WrongLoginOrPasswordState) {
+        if (state is ErrorLoginScreenState) {
           isSomethingWrong = true;
           showTopSnackBar(
             Overlay.of(context)!,
