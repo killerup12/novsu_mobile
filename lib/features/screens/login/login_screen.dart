@@ -119,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 icon: _getEyeIcon(obscureText),
                                 color: ThemeHelper.getAppTheme().iconButtonColor,
                                 iconSize: 20,
+                                splashRadius: 19,
                                 onPressed: () {
                                   setState(() {
                                     obscureText = !obscureText;
