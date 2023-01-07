@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late final LoginBloc bloc;
 
   bool isSomethingWrong = false;
+  bool obscureText = true;
 
   @override
   void initState() {
@@ -79,23 +80,46 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     width: 300,
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          isSomethingWrong = false;
-                        });
-                      },
-                      autocorrect: false,
-                      controller: passwordTextController,
-                      readOnly: checkIsWaitingResponse(state),
-                      decoration: const InputDecoration(
-                        hintText: 'password', //TODO i18n
-                      ),
-                      textInputAction: TextInputAction.done,
-                      onEditingComplete: () => tryToLogIn(
-                          loginTextController.text,
-                          passwordTextController.text
-                      ),
+                    child: Stack(
+                      children: [
+                        TextField(
+                          onChanged: (value) {
+                            setState(() {
+                              isSomethingWrong = false;
+                            });
+                          },
+                          obscureText: obscureText,
+                          autocorrect: false,
+                          controller: passwordTextController,
+                          readOnly: checkIsWaitingResponse(state),
+                          decoration: const InputDecoration(
+                            hintText: 'password', //TODO i18n
+                          ),
+                          textInputAction: TextInputAction.done,
+                          onEditingComplete: () => tryToLogIn(
+                              loginTextController.text,
+                              passwordTextController.text
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 5),
+                              IconButton(
+                                icon: _getEyeIcon(obscureText),
+                                color: ThemeHelper.getAppTheme().iconButtonColor,
+                                iconSize: 20,
+                                onPressed: () {
+                                  setState(() {
+                                    obscureText = !obscureText;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -132,6 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
       return false;
     }
   }
+
+  _getEyeIcon(bool obscureText) => (obscureText)
+      ? const Icon(Icons.visibility_outlined)
+      : const Icon(Icons.visibility_off_outlined);
 
   tryToLogIn(String uid, String password) {
     hideKeyboard();

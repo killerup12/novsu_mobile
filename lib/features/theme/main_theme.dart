@@ -102,6 +102,9 @@ class MainTheme implements AppTheme {
   ThemeData get theme => _getThemeData();
 
   @override
+  Color get iconButtonColor => _colorDarkBlue;
+
+  @override
   Color get enableActionButton => _colorDarkBlue;
 
   @override
