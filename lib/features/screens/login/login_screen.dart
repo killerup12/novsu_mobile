@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
-
+                          isSomethingWrong = false;
                         });
                       },
                       autocorrect: false,
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextField(
                       onChanged: (value) {
                         setState(() {
-
+                          isSomethingWrong = false;
                         });
                       },
                       autocorrect: false,
@@ -171,17 +171,15 @@ class _LoginButton extends StatefulWidget {
 }
 
 class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderStateMixin {
-  late Animation<Color?> animation;
+  late final Animation<Color?> animationCurrent;
+  late final Animation<Color?> animationError;
   late AnimationController controller;
 
   @override
   void initState() {
     controller = AnimationController(duration: const Duration(milliseconds: 70), vsync: this);
-    if (widget.isSomethingWrong) {
-      animation = ColorTween(begin: widget._disableColor, end: widget._errorColor).animate(controller);
-    } else {
-      animation = ColorTween(begin: widget._disableColor, end: widget._enableColor).animate(controller);
-    }
+    animationError = ColorTween(begin: widget._disableColor, end: widget._errorColor).animate(controller);
+    animationCurrent = ColorTween(begin: widget._disableColor, end: widget._enableColor).animate(controller);
     super.initState();
   }
 
@@ -194,7 +192,7 @@ class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderSta
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: animation,
+      animation: widget.isSomethingWrong ? animationError : animationCurrent,
       builder: (context, child) => InkWell(
         borderRadius: BorderRadius.circular(90),
         onTap: animationHelper(),
@@ -202,7 +200,7 @@ class _LoginButtonState extends State<_LoginButton> with SingleTickerProviderSta
           height: 70,
           width: 200,
           decoration: BoxDecoration(
-              color: animation.value,
+              color: widget.isSomethingWrong ? animationError.value : animationCurrent.value,
               borderRadius: const BorderRadius.all(Radius.circular(90)),
               boxShadow: [
                 BoxShadow(
